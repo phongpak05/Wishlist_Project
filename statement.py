@@ -125,7 +125,37 @@ edit_expense_btn.place(relx=1.0, rely=1.0,
                        x=-8, y=-8,
                        anchor="se")
 
+def create_bottom_nav(parent):
+    bottom_nav = tk.Frame(parent, height=70, bg="#000033")
+    bottom_nav.pack(side="bottom", fill="x")
+
+    btn_home = tk.Button(bottom_nav, text="🏠",
+                         bg="#000033", fg="white",
+                         border=0,
+                         font=("Segoe UI", 16))
+    btn_home.pack(side="left", expand=True)
+
+    btn_chart = tk.Button(bottom_nav, text="📊",
+                          bg="#000033", fg="white",
+                          border=0,
+                          font=("Segoe UI", 16))
+    btn_chart.pack(side="left", expand=True)
+
+    btn_history = tk.Button(bottom_nav, text="🕒",
+                            bg="#000033", fg="white",
+                            border=0,
+                            font=("Segoe UI", 16))
+    btn_history.pack(side="left", expand=True)
+
+    btn_setting = tk.Button(bottom_nav, text="⚙",
+                            bg="#000033", fg="white",
+                            border=0,
+                            font=("Segoe UI", 16))
+    btn_setting.pack(side="left", expand=True)
+
+
 # ======================
 # เริ่มโปรแกรม
 # ======================
+create_bottom_nav(root)
 root.mainloop()
