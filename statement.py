@@ -35,21 +35,21 @@ top_frame.pack(pady=20)
 income_frame = tk.Frame(top_frame,
                         width=150,
                         height=100,
-                        bg="#1F2A44")
+                        bg="#000033")
 income_frame.pack(side="left", padx=10)
 income_frame.pack_propagate(False)
 
 income_amount = tk.Label(income_frame,
                          text="X,XXX",
                          font=card_big_font,
-                         bg="#1F2A44",
+                         bg="#000033",
                          fg="white")
 income_amount.pack(pady=(10, 0), anchor="w", padx=15)
 
 income_label = tk.Label(income_frame,
                         text="Total Income",
                         font=card_small_font,
-                        bg="#1F2A44",
+                        bg="#000033",
                         fg="white")
 income_label.pack(anchor="w", padx=15)
 
@@ -102,11 +102,9 @@ balance_label.pack()
 edit_income_btn = tk.Button(income_frame,
                             text="📝",
                             font=("Arial", 10),
-                            bg="#1F2A44",
+                            bg="#000033",
                             fg="white",
                             border=0,
-                            activebackground="#1F2A44",
-                            activeforeground="white",
                             cursor="hand2")
 
 edit_income_btn.place(relx=1.0, rely=1.0,
@@ -126,7 +124,6 @@ edit_expense_btn = tk.Button(expense_frame,
 edit_expense_btn.place(relx=1.0, rely=1.0,
                        x=-8, y=-8,
                        anchor="se")
-
 
 # ======================
 # เริ่มโปรแกรม
