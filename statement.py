@@ -102,10 +102,11 @@ balance_label.pack()
 edit_income_btn = tk.Button(income_frame,
                             text="📝",
                             font=("Arial", 10),
-                            bg="#000033",
+                            bg=income_frame["bg"],
+                            activebackground=income_frame["bg"],
+                            activeforeground="white",
                             fg="white",
-                            border=0,
-                            cursor="hand2")
+                            border=0)
 
 edit_income_btn.place(relx=1.0, rely=1.0,
                       x=-8, y=-8,
@@ -132,6 +133,8 @@ def create_bottom_nav(parent):
     btn_home = tk.Button(bottom_nav, text="🏠",
                          bg="#000033", fg="white",
                          border=0,
+                         activebackground=bottom_nav["bg"],
+                         activeforeground="white",
                          font=("Segoe UI", 16))
     btn_home.pack(side="left", expand=True)
 
