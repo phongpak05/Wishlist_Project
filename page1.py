@@ -4,7 +4,7 @@ root = tk.Tk()
 
 root.title("Wishlist")
 root.configure(background="#000F36")
-root.geometry("390x740+1080+100")
+root.geometry("390x740+1080+20")
 root.resizable(False,False)
 
 def showPage(page):
@@ -12,7 +12,7 @@ def showPage(page):
 
 page1 = tk.Frame(root, bg="#000F36")
 pageLogin = tk.Frame(root, bg="#000F36")
-pageRegister = tk.Frame(root, bg="#B61818")
+pageRegister = tk.Frame(root, bg="#000F36")
 
 for p in (page1, pageLogin, pageRegister):
     p.place(x=0, y=0, relwidth=1, relheight=1)
@@ -104,6 +104,82 @@ password = tk.Entry(
     width=23,
     font=("coda",16)
 ).pack(pady=10)
+
+# ==================== PageRegister =====================
+tk.Label(
+    pageRegister,
+    text="REGISTER",
+    font=("fc motorway", 36, "bold"),
+    fg="white",
+    bg=pageLogin["bg"]
+).pack(pady=60)
+
+tk.Label(
+    pageRegister,
+    text="Email",
+    font=("coda", 12 ,"bold"),
+    fg="white",
+    bg=pageLogin["bg"]
+).place(relx=0.2, rely=0.248, anchor="center")
+
+tk.Label(
+    pageRegister,
+    text="Username",
+    font=("coda", 12 ,"bold"),
+    fg="white",
+    bg=pageLogin["bg"]
+).place(relx=0.245, rely=0.356, anchor="center")
+
+tk.Label(
+    pageRegister,
+    text="Password",
+    font=("coda", 12 ,"bold"),
+    fg="white",
+    bg=pageLogin["bg"]
+).place(relx=0.245, rely=0.462, anchor="center")
+
+tk.Label(
+    pageRegister,
+    text="Confirm",
+    font=("coda", 12 ,"bold"),
+    fg="white",
+    bg=pageLogin["bg"]
+).place(relx=0.224, rely=0.568, anchor="center")
+
+email = tk.Entry(
+    pageRegister,
+    width=23,
+    font=("coda",16)
+).pack(pady=25)
+
+usename = tk.Entry(
+    pageRegister,
+    width=23,
+    font=("coda",16)
+).pack(pady=25)
+
+password = tk.Entry(
+    pageRegister,
+    width=23,
+    font=("coda",16)
+).pack(pady=25)
+
+conPassword = tk.Entry(
+    pageRegister,
+    width=23,
+    font=("coda",16)
+).pack(pady=25)
+
+tk.Button(
+    pageRegister,
+    text="Done",
+    fg="black",
+    font=("coda" , 16 , "bold"),
+    width=10,
+    bg="white", bd=0,
+    command=lambda: showPage(pageLogin)
+).pack(pady=25)
+
 
 showPage(page1)
 root.mainloop()
