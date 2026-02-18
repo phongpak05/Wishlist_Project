@@ -180,6 +180,5 @@ tk.Button(
     command=lambda: showPage(pageLogin)
 ).pack(pady=25)
 
-
-showPage(page1)
+showPage(pageRegister)
 root.mainloop()
