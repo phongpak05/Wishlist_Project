@@ -105,5 +105,15 @@ password = tk.Entry(
     font=("coda",16)
 ).pack(pady=10)
 
-showPage(page1)
+# ==================== PageRegister =====================
+
+tk.Label(
+    pageLogin,
+    text="REGISTER",
+    font=("fc motorway", 36, "bold"),
+    fg="white",
+    bg=pageLogin["bg"]
+).pack(pady=70)
+
+showPage(pageRegister)
 root.mainloop()
