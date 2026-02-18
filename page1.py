@@ -4,7 +4,7 @@ root = tk.Tk()
 
 root.title("Wishlist")
 root.configure(background="#000F36")
-root.geometry("390x740+1080+100")
+root.geometry("390x740+1080+20")
 root.resizable(False,False)
 
 def showPage(page):
