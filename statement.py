@@ -105,6 +105,8 @@ edit_income_btn = tk.Button(income_frame,
                             bg="#000033",
                             fg="white",
                             border=0,
+                            activebackground="#000033",
+                            activeforeground="white",
                             cursor="hand2")
 
 edit_income_btn.place(relx=1.0, rely=1.0,
