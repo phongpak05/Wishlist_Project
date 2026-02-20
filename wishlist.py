@@ -7,15 +7,62 @@ root.configure(background="#000F36")
 root.geometry("390x740+1080+20")
 root.resizable(False,False)
 
+title_font = ("Segoe UI", 26, "bold")
+card_big_font = ("Helvetica", 16, "bold")
+card_small_font = ("Helvetica", 10)
+
+
 def showPage(page):
     page.tkraise()
 
 page1 = tk.Frame(root, bg="#000F36")
 pageLogin = tk.Frame(root, bg="#000F36")
 pageRegister = tk.Frame(root, bg="#000F36")
+pageHome = tk.Frame(root, bg="#d9d9d9")
+pageStatement = tk.Frame(root, bg="#d9d9d9")
+pageHistory = tk.Frame(root, bg="#d9d9d9")
+pageSetting = tk.Frame(root, bg="#d9d9d9")
 
-for p in (page1, pageLogin, pageRegister):
+
+for p in (page1, pageLogin, pageRegister , pageStatement,pageHome,pageHistory,pageSetting):
     p.place(x=0, y=0, relwidth=1, relheight=1)
+
+def create_bottom_nav(parent):
+    bottom_nav = tk.Frame(parent, height=70, bg="#000033")
+    bottom_nav.pack(side="bottom", fill="x")
+    bottom_nav.pack_propagate(False)
+
+    button_style = {
+        "bg": "#000033",
+        "fg": "white",
+        "activebackground": "#000033",   # ตอนกด ไม่เปลี่ยนสี
+        "activeforeground": "white",
+        "border": 0,
+        "highlightthickness": 0,
+        "font": ("Segoe UI", 16),
+        "relief": "flat",
+        "bd": 0
+    }
+
+    btn_home = tk.Button(bottom_nav, text="🏠", **button_style)
+    btn_home.pack(side="left", expand=True, fill="both")
+
+    btn_chart = tk.Button(bottom_nav, text="📊", **button_style)
+    btn_chart.pack(side="left", expand=True, fill="both")
+
+    btn_history = tk.Button(bottom_nav, text="🕒", **button_style)
+    btn_history.pack(side="left", expand=True, fill="both")
+
+    btn_setting = tk.Button(bottom_nav, text="⚙", **button_style)
+    btn_setting.pack(side="left", expand=True, fill="both")
+
+    return bottom_nav
+
+page_with_nav = [pageStatement]
+for page in page_with_nav:
+    create_bottom_nav(page)
+
+page_no_nav = [page1,pageLogin,pageRegister]
 
 frame = tk.Frame(page1, bg=page1["bg"])
 frame.place(relx=0.5, rely=0.35, anchor="center")
@@ -74,7 +121,7 @@ tk.Button(
     font=("coda" , 16 , "bold"),
     width=10,
     bg="white", bd=0,
-    command=lambda: showPage(page1)
+    command=lambda: showPage(pageStatement)
 ).place(relx=0.5, rely=0.54, anchor="center")
 
 username = tk.Label(
@@ -180,5 +227,121 @@ tk.Button(
     command=lambda: showPage(pageLogin)
 ).pack(pady=25)
 
-showPage(pageRegister)
+title_label = tk.Label(pageStatement, text="Statement",
+                       font=title_font,
+                       bg="#d9d9d9",
+                       fg="black")
+title_label.pack(pady=50)
+
+# ==================== PageHome =====================
+top_frame = tk.Frame(pageHome, bg="#d9d9d9")
+top_frame.pack(pady=20)
+
+
+
+# ======================
+# Frame สำหรับ Income/Expense
+# ======================
+top_frame = tk.Frame(pageStatement, bg="#d9d9d9")
+top_frame.pack(pady=20)
+
+# ===== Total Income =====
+income_frame = tk.Frame(top_frame,
+                        width=150,
+                        height=100,
+                        bg="#000033")
+income_frame.pack(side="left", padx=10)
+income_frame.pack_propagate(False)
+
+income_amount = tk.Label(income_frame,
+                         text="X,XXX",
+                         font=card_big_font,
+                         bg="#000033",
+                         fg="white")
+income_amount.pack(pady=(10, 0), anchor="w", padx=15)
+
+income_label = tk.Label(income_frame,
+                        text="Total Income",
+                        font=card_small_font,
+                        bg="#000033",
+                        fg="white")
+income_label.pack(anchor="w", padx=15)
+
+# ===== Total Expense =====
+expense_frame = tk.Frame(top_frame,
+                         width=150,
+                         height=100,
+                         bg="#f0f0f0")
+expense_frame.pack(side="left", padx=10)
+expense_frame.pack_propagate(False)
+
+expense_amount = tk.Label(expense_frame,
+                          text="X,XXX",
+                          font=card_big_font,
+                          bg="#f0f0f0",
+                          fg="black")
+expense_amount.pack(pady=(10, 0), anchor="w", padx=15)
+
+expense_label = tk.Label(expense_frame,
+                         text="Total Expense",
+                         font=card_small_font,
+                         bg="#f0f0f0",
+                         fg="black")
+expense_label.pack(anchor="w", padx=15)
+
+# ======================
+# Balance Card
+# ======================
+balance_frame = tk.Frame(pageStatement,
+                         width=330,
+                         height=120,
+                         bg="#cfcfcf")
+balance_frame.pack(pady=0)
+balance_frame.pack_propagate(False)
+
+balance_amount = tk.Label(balance_frame,
+                          text="X,XXX",
+                          font=card_big_font,
+                          bg="#cfcfcf",
+                          fg="black")
+balance_amount.pack(pady=(10, 0))
+
+balance_label = tk.Label(balance_frame,
+                         text="Balance",
+                         font=card_small_font,
+                         bg="#cfcfcf",
+                         fg="black")
+balance_label.pack()
+
+edit_income_btn = tk.Button(income_frame,
+                            text="📝",
+                            font=("Arial", 10),
+                            bg="#000033",
+                            fg="white",
+                            border=0,
+                            activebackground="#000033",
+                            activeforeground="white",
+                            cursor="hand2",)
+
+edit_income_btn.place(relx=1.0, rely=1.0,
+                      x=-8, y=-8,
+                      anchor="se")
+
+edit_expense_btn = tk.Button(expense_frame,
+                             text="📝",
+                             font=("Arial", 10),
+                             bg="#f0f0f0",
+                             fg="black",
+                             border=0,
+                             activebackground="#f0f0f0",
+                             activeforeground="black",
+                             cursor="hand2")
+
+edit_expense_btn.place(relx=1.0, rely=1.0,
+                       x=-8, y=-8,
+                       anchor="se")
+
+
+
+showPage(page1)
 root.mainloop()
