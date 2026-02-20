@@ -5,9 +5,6 @@ class EditExpensePage(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, bg="#E9E9E9")
 
-        # ==============================
-        # HEADER (Back + Title)
-        # ==============================
         header = tk.Frame(self, bg="#E9E9E9")
         header.pack(fill="x", pady=(20, 0))
 
@@ -30,9 +27,6 @@ class EditExpensePage(tk.Frame):
         )
         title.pack(pady=(10, 30))
 
-        # ==============================
-        # FORM SECTION
-        # ==============================
         form_frame = tk.Frame(self, bg="#E9E9E9")
         form_frame.pack(pady=10)
 
@@ -55,9 +49,6 @@ class EditExpensePage(tk.Frame):
         self.income_entry.insert(0, "Bath")
         self.income_entry.pack(pady=5, ipady=6)
 
-        # ==============================
-        # SAVE BUTTON
-        # ==============================
         save_btn = tk.Button(
             self,
             text="Save",
@@ -74,16 +65,12 @@ class EditExpensePage(tk.Frame):
     def save(self):
         print("Saved:", self.income_entry.get())
 
-
-# ==============================
-# RUN PROGRAM
-# ==============================
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Expense App")
     root.geometry("390x740")
 
-    root.resizable(False, False)  # 🔒 ล็อกหน้าจอ
+    root.resizable(False, False)
 
     page = EditExpensePage(root)
     page.pack(fill="both", expand=True)
