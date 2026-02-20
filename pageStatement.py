@@ -69,7 +69,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Statement Test")
     root.geometry("390x740")
-
+    root.resizable(False,False)
     page = StatementPage(root)
     page.pack(fill="both", expand=True)
 

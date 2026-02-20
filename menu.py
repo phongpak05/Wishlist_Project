@@ -30,10 +30,9 @@ def create_bottom_nav(parent):
 
 
 # ===== main window =====
-root = tk.Tk()
-root.geometry("390x740")
-root.configure(bg="white")
-
-create_bottom_nav(root)
-
-root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.geometry("390x740")
+    root.configure(bg="white")
+    create_bottom_nav(root)
+    root.mainloop()
