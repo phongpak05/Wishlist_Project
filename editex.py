@@ -56,7 +56,6 @@ income_entry = tk.Entry(
     relief="flat",
     width=25
 )
-income_entry.insert(0, "Bath")
 income_entry.pack(pady=5, ipady=6)
 
 # ==============================
