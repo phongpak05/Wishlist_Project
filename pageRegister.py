@@ -81,6 +81,7 @@ class pageRegister(ctk.CTkFrame):
                       font=buttonFont,
                       fg_color="white",
                       hover_color="white",
+                      command=lambda:showPage("login"),
                       text_color="black"                      
                       ).place(relx=0.5,rely=0.7,anchor="center")
                      
