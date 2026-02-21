@@ -1,7 +1,7 @@
 import customtkinter as ctk
 
 class pageLogin(ctk.CTkFrame):
-    def __init__(self,parent):
+    def __init__(self,parent,showPage):
         super().__init__(parent , fg_color="#000F36")
 
         titleFont = ("fc motorway",45,"bold")
@@ -26,6 +26,7 @@ class pageLogin(ctk.CTkFrame):
                      font = ("fc mootorway",32,"bold"),
                      text_color="white",
                      fg_color="transparent",
+                     command=lambda:showPage("welcome"),
                      hover_color="#000F36"
                      ).place(x=15,y=25)
         ctk.CTkEntry(content,
