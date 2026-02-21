@@ -14,7 +14,7 @@ class homePage(tk.Frame):
                                bg="#d9d9d9")
         title_label.place(relx=0.5, rely=0.3, anchor="center")
         
-    
+        
 
         create_bottom_nav(self)
         

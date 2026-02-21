@@ -1,4 +1,5 @@
 import tkinter as tk
+from menu import create_bottom_nav
 
 class StatementPage(tk.Frame):
     def __init__(self, parent):
@@ -52,7 +53,7 @@ class StatementPage(tk.Frame):
                   bg=income_frame["bg"],
                   fg="white",
                   border=0,
-                  activebackground=income_frame["bg"],
+                  activebackground="#000033",
                   activeforeground="white",
                   ).place(relx=1.0, rely=1.0,x=-8, y=-8,anchor="se")
         tk.Button(expense_frame,
@@ -64,12 +65,15 @@ class StatementPage(tk.Frame):
                   activebackground=expense_frame["bg"],
                   activeforeground="black",
                   ).place(relx=1.0, rely=1.0,x=-8, y=-8,anchor="se")
+                  
+
+        create_bottom_nav(self)
         
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Statement Test")
     root.geometry("390x740")
-    root.resizable(False,False)
+
     page = StatementPage(root)
     page.pack(fill="both", expand=True)
 
