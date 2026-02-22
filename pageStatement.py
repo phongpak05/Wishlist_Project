@@ -54,11 +54,20 @@ edit_income_btn = ctk.CTkButton(
     width=25,
     height=25,
     fg_color="transparent",
-    hover_color="#1a1a66",
+    hover=False,
     text_color="white",
     font=("Arial", 12)
 )
 edit_income_btn.place(relx=1.0, rely=1.0, x=-8, y=-8, anchor="se")
+
+def press_income(e):
+    edit_income_btn.place_configure(x=-8, y=-6)
+
+def release_income(e):
+    edit_income_btn.place_configure(x=-8, y=-8)
+
+edit_income_btn.bind("<ButtonPress-1>", press_income)
+edit_income_btn.bind("<ButtonRelease-1>", release_income)
 
 expense_frame = ctk.CTkFrame(
     top_frame,
@@ -92,11 +101,20 @@ edit_expense_btn = ctk.CTkButton(
     width=25,
     height=25,
     fg_color="transparent",
-    hover_color="#dddddd",
+    hover=False,
     text_color="black",
     font=("Arial", 12)
 )
 edit_expense_btn.place(relx=1.0, rely=1.0, x=-8, y=-8, anchor="se")
+
+def press_expense(e):
+    edit_expense_btn.place_configure(x=-8, y=-6)
+
+def release_expense(e):
+    edit_expense_btn.place_configure(x=-8, y=-8)
+
+edit_expense_btn.bind("<ButtonPress-1>", press_expense)
+edit_expense_btn.bind("<ButtonRelease-1>", release_expense)
 
 balance_frame = ctk.CTkFrame(
     root,
