@@ -22,7 +22,7 @@ class pageHome(ctk.CTkFrame):
         ctk.CTkLabel(
             header,
             text="HOME",
-            font=("Arial", 42, "bold"),
+            font=("fc motorway", 58, "bold"),
             text_color="black"
         ).pack(pady=(16, 10))
 

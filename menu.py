@@ -7,7 +7,7 @@ def create_bottom_nav(parent):
     button_style = {
         "bg": "#000033",
         "fg": "white",
-        "activebackground": "#000033",   # ตอนกด ไม่เปลี่ยนสี
+        "activebackground": "#000033",
         "activeforeground": "white",
         "border": 0,
         "highlightthickness": 0,
