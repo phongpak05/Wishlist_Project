@@ -29,8 +29,9 @@ class planCard(ctk.CTkFrame):
             width=28, 
             height=28, 
             corner_radius=8,
-            fg_color="#BFBFBF", 
-            text_color="black", 
+            fg_color="#D9D9D9", 
+            hover_color="#D9D9D9",
+            text_color="black",
             command=command
         ).grid(row=0, column=3, padx=(0, 12))
 
