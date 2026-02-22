@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from menu import create_bottom_nav
-from PIL import Image, ImageDraw
-import os
+from components import planCard
 
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
@@ -87,34 +86,30 @@ class pageHome(ctk.CTkFrame):
         for w in self.list_frame.winfo_children():
             w.destroy()
 
-        empty = ctk.CTkFrame(self.list_frame,
-                             corner_radius=16,
-                             fg_color="#FFFFFF")
-        empty.grid(row=0, column=0, sticky="ew", pady=20)
-        empty.grid_columnconfigure(0, weight=1)
+        plans = getattr(self.controller, "plans", [])
 
-        ctk.CTkLabel(
-            empty,
-            text="ยังไม่มีแผนการออม\nกด + Plan เพื่อเพิ่มแผนใหม่",
-            font=("Arial", 14),
-            text_color="gray"
-        ).grid(row=0, column=0, pady=30, padx=20)
+        if len(plans) == 0:
+            empty = ctk.CTkFrame(self.list_frame, corner_radius=16, fg_color="#FFFFFF")
+            empty.grid(row=0, column=0, sticky="ew", pady=20)
+            empty.grid_columnconfigure(0, weight=1)
 
+            ctk.CTkLabel(
+                empty,
+                text="ยังไม่มีแผนการออม\nกด + Plan เพื่อเพิ่มแผนใหม่",
+                font=("Arial", 14),
+                text_color="gray"
+            ).grid(row=0, column=0, pady=30, padx=20)
+            return
 
-if __name__ == "__main__":
-    root = ctk.CTk()
-    root.title("Test Home")
-    root.geometry("390x740")
-    root.resizable(False, False)
+        for i, p in enumerate(plans):
+            card = planCard(
+                self.list_frame,
+                name=p.get("name", f"plan {i+1}"),
+                percent=p.get("percent", 0),
+                bar_color=p.get("color", "#2E7D32"),
+                command=lambda pid=p.get("id", i+1): self.on_open_details(pid)
+            )
+            card.grid(row=i, column=0, sticky="ew", pady=8)
 
-    class DummyController:
-        plans = []
-
-    def showPage(name):
-        print("showPage:", name)
-
-    page = pageHome(root, showPage, DummyController())
-    page.pack(fill="both", expand=True)
-    page.refresh()
-
-    root.mainloop()
+    def on_open_details(self, plan_id):
+        print("Open details for plan_id:", plan_id)
