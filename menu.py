@@ -16,16 +16,24 @@ def create_bottom_nav(parent):
         "bd": 0
     }
 
-    btn_home = tk.Button(bottom_nav, text="🏠", **button_style)
+    btn_home = tk.Button(bottom_nav, 
+                         text="🏠", 
+                         **button_style)
     btn_home.pack(side="left", expand=True, fill="both")
 
-    btn_chart = tk.Button(bottom_nav, text="📊", **button_style)
+    btn_chart = tk.Button(bottom_nav, 
+                          text="📊", 
+                          **button_style)
     btn_chart.pack(side="left", expand=True, fill="both")
 
-    btn_history = tk.Button(bottom_nav, text="🕒", **button_style)
+    btn_history = tk.Button(bottom_nav, 
+                            text="🕒", 
+                            **button_style)
     btn_history.pack(side="left", expand=True, fill="both")
 
-    btn_setting = tk.Button(bottom_nav, text="⚙", **button_style)
+    btn_setting = tk.Button(bottom_nav, 
+                            text="⚙", 
+                            **button_style)
     btn_setting.pack(side="left", expand=True, fill="both")
 
 

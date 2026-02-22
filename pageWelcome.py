@@ -14,6 +14,7 @@ class pageWelcome(ctk.CTkFrame):
                      text="WISH", 
                      font=welcomeFont, 
                      text_color="#2EC7AD").pack(side="left")
+        
         ctk.CTkLabel(frame, 
                      text="LIST", 
                      font=welcomeFont, 

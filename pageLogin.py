@@ -48,6 +48,7 @@ class pageLogin(ctk.CTkFrame):
                       font=buttonFont,
                       fg_color="white",
                       hover_color="white",
+                      command=lambda:showPage("home"),
                       text_color="black"                      
                       ).place(relx=0.5,rely=0.42,anchor="center")
         ctk.CTkLabel(content,
