@@ -10,7 +10,7 @@ class app(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("390x740")
+        self.geometry("390x740+00+30")
         self.resizable(False, False)
         self.title("WISHLIST")
 
@@ -21,7 +21,6 @@ class app(ctk.CTk):
         self.pages["welcome"] = pageWelcome(self, self.showPage)
         self.pages["login"] = pageLogin(self, self.showPage)
         self.pages["register"] = pageRegister(self, self.showPage)
-        
 
         self.pages["home"] = pageHome(self, self.showPage, self)
         self.pages["newplan"] = pageNewplan(self, self.showPage, self)
