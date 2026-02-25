@@ -5,6 +5,7 @@ from pageRegister import pageRegister
 from pageHome import pageHome
 from pageNewplan import pageNewplan
 from components import planCard
+from pageStatement import pageStatement
 
 class app(ctk.CTk):
     def __init__(self):
@@ -24,6 +25,7 @@ class app(ctk.CTk):
 
         self.pages["home"] = pageHome(self, self.showPage, self)
         self.pages["newplan"] = pageNewplan(self, self.showPage, self)
+        self.pages["statement"] = pageStatement(self, self.showPage, self)
 
         for page in self.pages.values():
             page.place(x=0, y=0, relwidth=1, relheight=1)

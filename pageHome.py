@@ -78,7 +78,7 @@ class pageHome(ctk.CTkFrame):
                                    fg_color="#0A1E4A")
         self.footer.grid(row=2, column=0, sticky="ew")
         self.footer.grid_propagate(False)
-        create_bottom_nav(self.footer)
+        create_bottom_nav(self.footer, self.showPage)
 
     def refresh(self):
         self.username_label.configure(text=getattr(self.controller, "current_username", "Username"))
