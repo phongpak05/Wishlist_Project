@@ -121,5 +121,5 @@ class pageHistory(ctk.CTk):
         progress.set(percent / 100)
 
 if __name__ == "__main__":
-    app = HistoryPage()
+    app = pageHistory()
     app.mainloop()
