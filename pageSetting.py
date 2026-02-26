@@ -10,8 +10,8 @@ class pageSetting(ctk.CTkFrame):
         self.showPage = showPage
         self.controller = controller
 
-        self.grid_rowconfigure(0, weight=1)   # content
-        self.grid_rowconfigure(1, weight=0)   # footer
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(1, weight=0)
         self.grid_columnconfigure(0, weight=1)
 
         content = ctk.CTkFrame(self, fg_color="transparent")
@@ -28,40 +28,28 @@ class pageSetting(ctk.CTkFrame):
 
         user_frame = ctk.CTkFrame(
             content,
-            fg_color="#14213D",
-            corner_radius=20,
-            height=70
+            fg_color="#0A1E4A",
+            corner_radius=18,
+            height=62
         )
-        user_frame.pack(padx=30, pady=10, fill="x")
+        user_frame.pack(padx=20, pady=(0, 10), fill="x")
         user_frame.pack_propagate(False)
 
-        profile_circle = ctk.CTkFrame(
+        ctk.CTkLabel(
             user_frame,
-            width=50,
-            height=50,
-            corner_radius=25,
-            fg_color="white"
-        )
-        profile_circle.pack(side="left", padx=20)
-        profile_circle.pack_propagate(False)
-
-        profile_icon = ctk.CTkLabel(
-            profile_circle,
             text="👤",
-            font=("Arial", 22),
-            text_color="#14213D"
-        )
-        profile_icon.place(relx=0.5, rely=0.5, anchor="center")
+            font=("Arial", 48),
+            text_color="#FFFFFF"
+        ).place(relx=0.12, rely=0.45, anchor="center")
 
         username_label = ctk.CTkLabel(
             user_frame,
             text=getattr(self.controller, "current_username", "Username"),
-            font=("Arial", 18, "bold"),
+            font=("Arial", 19, "bold"),
             text_color="white"
         )
-        username_label.pack(side="left")
+        username_label.place(relx=0.28, rely=0.5, anchor="w")
 
-        
         spacer = ctk.CTkFrame(content, fg_color="transparent")
         spacer.pack(fill="both", expand=True)
 
@@ -77,13 +65,11 @@ class pageSetting(ctk.CTkFrame):
         )
         logout_button.pack(pady=(0, 30))
 
-        # ===== footer =====
         footer = ctk.CTkFrame(self, height=80, corner_radius=0, fg_color="#0A1E4A")
         footer.grid(row=1, column=0, sticky="ew")
         footer.grid_propagate(False)
 
         create_bottom_nav(footer, self.showPage)
-
 
 if __name__ == "__main__":
     root = ctk.CTk()
