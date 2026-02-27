@@ -1,9 +1,8 @@
-import customtkinter as ctk
+import tkinter as tk
 
-def create_bottom_nav(parent, showPage):
-    bottom_nav = ctk.CTkFrame(parent, height=70, fg_color="#0A1E4A", corner_radius=0)
-    bottom_nav.pack(fill="both", expand=True)
-    bottom_nav.pack_propagate(False)
+def create_bottom_nav(parent):
+    bottom_nav = tk.Frame(parent, height=70, bg="#000033")
+    bottom_nav.pack(side="bottom", fill="x")
 
     button_style = {
         "bg": "#000033",
@@ -17,30 +16,24 @@ def create_bottom_nav(parent, showPage):
         "bd": 0
     }
 
-    btn_home = tk.Button(bottom_nav, 
-                         text="🏠", 
-                         **button_style)
+    btn_home = tk.Button(bottom_nav, text="🏠", **button_style)
     btn_home.pack(side="left", expand=True, fill="both")
 
-    ctk.CTkButton(
-        bottom_nav, 
-        text="📊", 
-        **button_style,
-        command=lambda: showPage("statement")
-    ).pack(side="left", expand=True, fill="both")
+    btn_chart = tk.Button(bottom_nav, text="📊", **button_style)
+    btn_chart.pack(side="left", expand=True, fill="both")
 
-    ctk.CTkButton(
-        bottom_nav, 
-        text="🕒", 
-        **button_style,
-        command=lambda: showPage("history")
-    ).pack(side="left", expand=True, fill="both")
+    btn_history = tk.Button(bottom_nav, text="🕒", **button_style)
+    btn_history.pack(side="left", expand=True, fill="both")
 
-    ctk.CTkButton(
-        bottom_nav, 
-        text="⚙", 
-        **button_style,
-        command=lambda: showPage("setting")
-    ).pack(side="left", expand=True, fill="both")
+    btn_setting = tk.Button(bottom_nav, text="⚙", **button_style)
+    btn_setting.pack(side="left", expand=True, fill="both")
 
-    return bottom_nav
+
+# ===== main window =====
+root = tk.Tk()
+root.geometry("390x740")
+root.configure(bg="white")
+
+create_bottom_nav(root)
+
+root.mainloop()
