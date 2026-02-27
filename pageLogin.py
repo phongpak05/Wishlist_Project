@@ -63,9 +63,6 @@ class pageLogin(ctk.CTkFrame):
                      fg_color="transparent"
                      ).place(relx=0.27,rely=0.19,anchor="center")
                      
-
-
-        
 if __name__ == "__main__":
     root = ctk.CTk()
     root.title("Welcome to my Program")
