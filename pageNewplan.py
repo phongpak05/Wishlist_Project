@@ -120,7 +120,7 @@ class pageNewplan(ctk.CTkFrame):
                               fg_color="#0A1E4A")
         footer.grid(row=2, column=0, sticky="ew")
         footer.grid_propagate(False)
-        create_bottom_nav(footer)
+        create_bottom_nav(footer, self.showPage)
 
     def on_save(self):
         name = self.ent_name.get().strip()
