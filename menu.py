@@ -1,39 +1,63 @@
-import tkinter as tk
+import customtkinter as ctk
 
-def create_bottom_nav(parent):
-    bottom_nav = tk.Frame(parent, height=70, bg="#000033")
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
+
+
+def create_bottom_nav(parent, showPage=None):
+
+    bottom_nav = ctk.CTkFrame(parent, height=70, corner_radius=0 , fg_color="#000033")
     bottom_nav.pack(side="bottom", fill="x")
 
-    button_style = {
-        "bg": "#000033",
-        "fg": "white",
-        "activebackground": "#000033",   # ตอนกด ไม่เปลี่ยนสี
-        "activeforeground": "white",
-        "border": 0,
-        "highlightthickness": 0,
-        "font": ("Segoe UI", 16),
-        "relief": "flat",
-        "bd": 0
-    }
+    btn_home = ctk.CTkButton(
+        bottom_nav,
+        text="🏠",
+        fg_color="transparent",
+        font = ("Segoe UI Emoji", 24),
+        hover=False,
+        width=80,
+        command=(lambda: showPage("home")) if showPage else None
+    )
+    btn_home.pack(side="left", expand=True, pady=10)
 
-    btn_home = tk.Button(bottom_nav, text="🏠", **button_style)
-    btn_home.pack(side="left", expand=True, fill="both")
+    btn_chart = ctk.CTkButton(
+        bottom_nav,
+        text="📊",
+        fg_color="transparent",
+        font = ("Segoe UI Emoji", 24),
+        hover=False,
+        width=80,
+        command=(lambda: showPage("statement")) if showPage else None
+    )
+    btn_chart.pack(side="left", expand=True, pady=10)
 
-    btn_chart = tk.Button(bottom_nav, text="📊", **button_style)
-    btn_chart.pack(side="left", expand=True, fill="both")
+    btn_history = ctk.CTkButton(
+        bottom_nav,
+        text="🕒",
+        fg_color="transparent",
+        font = ("Segoe UI Emoji", 24),
+        hover=False,
+        width=80,
+        command=(lambda: showPage("history")) if showPage else None
+    )
+    btn_history.pack(side="left", expand=True, pady=10)
 
-    btn_history = tk.Button(bottom_nav, text="🕒", **button_style)
-    btn_history.pack(side="left", expand=True, fill="both")
+    btn_setting = ctk.CTkButton(
+        bottom_nav,
+        text="⚙",
+        fg_color="transparent",
+        font = ("Segoe UI Emoji", 24),
+        hover=False,
+        width=80,
+        command=(lambda: showPage("setting")) if showPage else None
+    )
+    btn_setting.pack(side="left", expand=True, pady=10)
 
-    btn_setting = tk.Button(bottom_nav, text="⚙", **button_style)
-    btn_setting.pack(side="left", expand=True, fill="both")
 
+if __name__ == "__main__":
+    app = ctk.CTk()
+    app.geometry("390x740")
 
-# ===== main window =====
-root = tk.Tk()
-root.geometry("390x740")
-root.configure(bg="white")
+    create_bottom_nav(app)
 
-create_bottom_nav(root)
-
-root.mainloop()
+    app.mainloop()
