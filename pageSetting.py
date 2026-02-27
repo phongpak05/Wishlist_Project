@@ -1,20 +1,22 @@
 import customtkinter as ctk
+from menu import create_bottom_nav
 
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
-class pageStatement(ctk.CTk):
 
-    def __init__(self):
-        super().__init__()
+class pageSetting(ctk.CTkFrame):
+    def __init__(self, master, showPage, controller):
+        super().__init__(master, fg_color="#F2F2F2")
 
-        self.title("Setting")
-        self.geometry("390x740")
-        self.resizable(False, False)
-        self.configure(fg_color="#F2F2F2")
+        self.showPage = showPage
+        self.controller = controller
+
+        content = ctk.CTkFrame(self, fg_color="transparent")
+        content.pack(fill="both", expand=True)
 
         title_label = ctk.CTkLabel(
-            self,
+            content,
             text="Setting",
             font=("Arial", 26, "bold"),
             text_color="black"
@@ -22,7 +24,7 @@ class pageStatement(ctk.CTk):
         title_label.pack(pady=(30, 20))
 
         user_frame = ctk.CTkFrame(
-            self,
+            content,
             fg_color="#14213D",
             corner_radius=20,
             height=70
@@ -57,7 +59,7 @@ class pageStatement(ctk.CTk):
         username_label.pack(side="left")
 
         logout_button = ctk.CTkButton(
-            self,
+            content,
             text="Log Out",
             font=("Arial", 16, "bold"),
             width=160,
@@ -66,8 +68,23 @@ class pageStatement(ctk.CTk):
             fg_color="#6E0E0A",
             hover_color="#8B0000"
         )
-        logout_button.pack(pady=(400, 120))
+        logout_button.pack(pady=40)
+
+        footer = ctk.CTkFrame(
+            self,
+            height=80,
+            corner_radius=0,
+            fg_color="#0A1E4A"
+        )
+        footer.pack(side="bottom", fill="x")
+
+        create_bottom_nav(footer, self.showPage)
 
 if __name__ == "__main__":
-    app = SettingPage()
+    app = ctk.CTk()
+    app.geometry("390x740")
+
+    page = pageSetting(app, None, None)
+    page.pack(fill="both", expand=True)
+
     app.mainloop()
