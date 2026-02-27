@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from menu import create_bottom_nav
+from userBar import userBar
 
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
@@ -13,53 +14,29 @@ class pageHistory(ctk.CTkFrame):
         self.showPage = showPage
         self.app = app
 
-        self.configure(fg_color="#F2F2F2")
+        self.configure(fg_color="#F5F5F5")
 
-        content = ctk.CTkFrame(self, fg_color="transparent")
-        content.pack(fill="both", expand=True)
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+        header = ctk.CTkFrame(self, height=160, corner_radius=0, fg_color="#F5F5F5")
+        header.grid(row=0, column=0, sticky="ew")
+        header.grid_propagate(False)
 
         title_label = ctk.CTkLabel(
-            content,
-            text="History",
-            font=("Arial", 26, "bold"),
+            header,
+            text="HISTORY",
+            font=("fc motorway", 58, "bold"),
             text_color="black"
         )
-        title_label.pack(pady=(30, 10))
+        title_label.pack(pady=(16, 10))
 
-        user_frame = ctk.CTkFrame(
-            content,
-            fg_color="#14213D",
-            corner_radius=20,
-            height=80
-        )
-        user_frame.pack(padx=30, pady=15, fill="x")
-        user_frame.pack_propagate(False)
+        self.user_bar = userBar(header, "Username")
+        self.user_bar.pack(padx=20, pady=(0, 10), fill="x")
 
-        profile_circle = ctk.CTkFrame(
-            user_frame,
-            width=56,
-            height=56,
-            corner_radius=28,
-            fg_color="white"
-        )
-        profile_circle.pack(side="left", padx=20)
-        profile_circle.pack_propagate(False)
 
-        profile_icon = ctk.CTkLabel(
-            profile_circle,
-            text="👤",
-            font=("Arial", 24),
-            text_color="#14213D"
-        )
-        profile_icon.place(relx=0.5, rely=0.5, anchor="center")
-
-        username_label = ctk.CTkLabel(
-            user_frame,
-            text="Username",
-            font=("Arial", 19, "bold"),
-            text_color="white"
-        )
-        username_label.pack(side="left")
+        content = ctk.CTkFrame(self, fg_color="transparent")
+        content.grid(row=1, column=0, sticky="nsew")
 
         self.create_history_card(content, "iphone", 100)
         self.create_history_card(content, "ipad", 100)
@@ -71,7 +48,8 @@ class pageHistory(ctk.CTkFrame):
             corner_radius=0,
             fg_color="#0A1E4A"
         )
-        footer.pack(side="bottom", fill="x")
+        footer.grid(row=2, column=0, sticky="ew")
+        footer.grid_propagate(False)
 
         create_bottom_nav(footer, self.showPage)
 

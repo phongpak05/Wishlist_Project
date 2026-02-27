@@ -13,7 +13,7 @@ class app(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.geometry("390x740+00+30")
+        self.geometry("390x740+150+50")
         self.resizable(False, False)
         self.title("WISHLIST")
 
