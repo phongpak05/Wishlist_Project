@@ -1,25 +1,21 @@
 import customtkinter as ctk
-from menu import create_bottom_nav
 
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
+
 class pageHistory(ctk.CTkFrame):
-    def __init__(self, master, showPage, controller):
-        super().__init__(master, fg_color="#F5F5F5")
+
+    def __init__(self, parent, showPage, app):
+        super().__init__(parent)
+        self.parent = parent
         self.showPage = showPage
-        self.controller = controller
+        self.app = app
 
-        self.grid_rowconfigure(0, weight=1)   # content
-        self.grid_rowconfigure(1, weight=0)   # footer
-        self.grid_columnconfigure(0, weight=1)
-
-        content = ctk.CTkFrame(self, fg_color="transparent")
-        content.grid(row=0, column=0, sticky="nsew")
-        content.grid_columnconfigure(0, weight=1)
+        self.configure(fg_color="#F2F2F2")
 
         title_label = ctk.CTkLabel(
-            content,
+            self,
             text="History",
             font=("Arial", 26, "bold"),
             text_color="black"
@@ -27,7 +23,7 @@ class pageHistory(ctk.CTkFrame):
         title_label.pack(pady=(30, 10))
 
         user_frame = ctk.CTkFrame(
-            content,
+            self,
             fg_color="#14213D",
             corner_radius=20,
             height=80
@@ -55,27 +51,20 @@ class pageHistory(ctk.CTkFrame):
 
         username_label = ctk.CTkLabel(
             user_frame,
-            text=getattr(self.controller, "current_username", "Username"),
+            text="Username",
             font=("Arial", 19, "bold"),
             text_color="white"
         )
         username_label.pack(side="left")
 
+        self.create_history_card("iphone", 100)
+        self.create_history_card("ipad", 100)
+        self.create_history_card("airpod", 100)
 
-        self.create_history_card(content, "iphone", 100)
-        self.create_history_card(content, "ipad", 100)
-        self.create_history_card(content, "airpod", 100)
+    def create_history_card(self, name, percent):
 
-        # ===== footer + bottom nav =====
-        footer = ctk.CTkFrame(self, height=80, corner_radius=0, fg_color="#0A1E4A")
-        footer.grid(row=1, column=0, sticky="ew")
-        footer.grid_propagate(False)
-
-        create_bottom_nav(footer, self.showPage)
-
-    def create_history_card(self, parent, name, percent):
         card = ctk.CTkFrame(
-            parent,
+            self,
             fg_color="#E6E6E6",
             corner_radius=20,
             height=90
@@ -107,14 +96,6 @@ class pageHistory(ctk.CTkFrame):
         )
         name_label.pack(side="left")
 
-        arrow_label = ctk.CTkLabel(
-            top_row,
-            text=">",
-            font=("Arial", 14),
-            text_color="black"
-        )
-        arrow_label.pack(side="right")
-
         percent_label = ctk.CTkLabel(
             top_row,
             text=f"{percent}%",
@@ -122,6 +103,14 @@ class pageHistory(ctk.CTkFrame):
             text_color="black"
         )
         percent_label.pack(side="right", padx=(0, 5))
+
+        arrow_label = ctk.CTkLabel(
+            top_row,
+            text=">",
+            font=("Arial", 14),
+            text_color="black"
+        )
+        arrow_label.pack(side="right")
 
         progress = ctk.CTkProgressBar(
             content,
@@ -134,16 +123,10 @@ class pageHistory(ctk.CTkFrame):
 
 
 if __name__ == "__main__":
-    root = ctk.CTk()
-    root.geometry("390x740+00+30")
-    root.resizable(False, False)
+    app = ctk.CTk()
+    app.geometry("390x740")
 
-    def dummy_showPage(name):
-        print("go to:", name)
-
-    dummy_controller = type("C", (), {"current_username": "Username"})()
-
-    page = pageHistory(root, dummy_showPage, dummy_controller)
+    page = pageHistory(app, None, None)
     page.pack(fill="both", expand=True)
 
-    root.mainloop()
+    app.mainloop()
