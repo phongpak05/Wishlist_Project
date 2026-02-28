@@ -8,6 +8,7 @@ from components import planCard
 from pageStatement import pageStatement
 from pageHistory import pageHistory
 from pageSetting import pageSetting
+from pageDetails import pageDetails
 
 class app(ctk.CTk):
     def __init__(self):
@@ -30,6 +31,7 @@ class app(ctk.CTk):
         self.pages["statement"] = pageStatement(self, self.showPage, self)
         self.pages["history"] = pageHistory(self, self.showPage, self)
         self.pages["setting"] = pageSetting(self, self.showPage, self)
+        self.pages["detail"] = pageDetails(self, self.showPage, self)
 
         for page in self.pages.values():
             page.place(x=0, y=0, relwidth=1, relheight=1)
