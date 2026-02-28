@@ -9,6 +9,9 @@ from pageStatement import pageStatement
 from pageHistory import pageHistory
 from pageSetting import pageSetting
 from pageDetails import pageDetails
+from editex import pageEditexpense
+from editin import pageIncome
+from pageAddsaving import pageAddsaving
 
 class app(ctk.CTk):
     def __init__(self):
@@ -32,6 +35,9 @@ class app(ctk.CTk):
         self.pages["history"] = pageHistory(self, self.showPage, self)
         self.pages["setting"] = pageSetting(self, self.showPage, self)
         self.pages["detail"] = pageDetails(self, self.showPage, self)
+        self.pages["editexpense"] = pageEditexpense(self, self.showPage, self)
+        self.pages["editincome"] = pageIncome(self, self.showPage, self)
+        self.pages["addsaving"] = pageAddsaving(self, self.showPage, self)
 
         for page in self.pages.values():
             page.place(x=0, y=0, relwidth=1, relheight=1)
