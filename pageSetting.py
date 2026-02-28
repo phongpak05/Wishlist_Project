@@ -23,7 +23,7 @@ class pageSetting(ctk.CTkFrame):
         title = ctk.CTkLabel(
             header,
             text="SETTING",  
-            font=("fc motorway", 58, "bold"),
+            font=("Arial", 42, "bold"),
             text_color="black"
         )
         title.pack(pady=(16, 10))

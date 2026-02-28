@@ -5,7 +5,7 @@ ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 
-class pageDetails(ctk.CTkFrame):
+class pageDetailsHome(ctk.CTkFrame):
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
         self.showPage = showPage
@@ -79,12 +79,13 @@ class pageDetails(ctk.CTkFrame):
 
         ctk.CTkButton(
             self,
-            text="Done",
+            text="Add Saving",
             width=220,
             height=44,
-            fg_color="#6E0E0A",
-            hover_color="#7A0000",
-            font=("Arial", 16, "bold")
+            fg_color="#2CAD1B",
+            hover=False,
+            font=("Arial", 16, "bold"),
+            command= lambda : showPage("addsaving")
         ).pack(pady=(6, 18))
         
         footer = ctk.CTkFrame(
@@ -133,7 +134,7 @@ if __name__ == "__main__":
     app.geometry("390x740")
     app.resizable(False, False)
 
-    page = pageDetails(app, None, None)
+    page = pageDetailsHome(app, None, None)
     page.pack(fill="both", expand=True)
 
     app.mainloop()

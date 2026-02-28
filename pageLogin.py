@@ -17,7 +17,7 @@ class pageLogin(ctk.CTkFrame):
 
         ctk.CTkLabel(header,
                      text="Login",
-                     font = titleFont,
+                     font = ("Arial", 42, "bold"),
                      text_color="white"
                      ).place(relx=0.5,rely=0.65,anchor="center")
         ctk.CTkButton(header,

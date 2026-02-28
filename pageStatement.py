@@ -24,7 +24,7 @@ class pageStatement(ctk.CTkFrame):
         ctk.CTkLabel(
             header,
             text="STATEMENT",
-            font=("fc motorway", 58, "bold"),
+            font=("Arial", 42, "bold"),
             text_color="black"
         ).pack(pady=(16, 10))
 
@@ -68,7 +68,8 @@ class pageStatement(ctk.CTkFrame):
             fg_color="transparent", 
             hover=False,
             text_color="white", 
-            font=("Arial", 12)
+            font=("Arial", 12),
+            command=lambda : showPage("editincome")
         )
         edit_income_btn.place(relx=1.0, rely=1.0, x=-8, y=-8, anchor="se")
 
@@ -100,7 +101,8 @@ class pageStatement(ctk.CTkFrame):
             fg_color="transparent", 
             hover=False,
             text_color="black", 
-            font=("Arial", 12)
+            font=("Arial", 12),
+            command=lambda : showPage("editexpense")
         )
         edit_expense_btn.place(relx=1.0, rely=1.0, x=-8, y=-8, anchor="se")
 

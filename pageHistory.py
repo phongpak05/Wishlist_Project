@@ -26,7 +26,7 @@ class pageHistory(ctk.CTkFrame):
         title_label = ctk.CTkLabel(
             header,
             text="HISTORY",
-            font=("fc motorway", 58, "bold"),
+            font=("Arial", 42, "bold"),
             text_color="black"
         )
         title_label.pack(pady=(16, 10))

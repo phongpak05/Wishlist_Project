@@ -18,26 +18,25 @@ class pageEditexpense(ctk.CTkFrame):
         header.grid(row=0, column=0, sticky="ew")
         header.grid_propagate(False)
 
-        top_bar = ctk.CTkFrame(header, fg_color="transparent")
-        top_bar.pack(fill="x", padx=10, pady=(10, 0))
 
-        back_btn = ctk.CTkLabel(
-            top_bar,
-            text="<",
-            font=("Arial", 18, "bold"),
-            text_color="black",
-            cursor="hand2"
-        )
-        back_btn.pack(side="left", padx=10)
-
-        title = ctk.CTkLabel(
+        ctk.CTkButton(
             header,
-            text="Edit Expense",
-            font=("fc motorway", 48, "bold"),
-            text_color="black"
-        )
-        title.pack(pady=(10, 10))
+            text="‹",
+            width=36,
+            height=36,
+            fg_color="transparent",
+            hover=False,
+            text_color="black",
+            font=("Arial", 28, "bold"),
+            command=lambda: self.showPage("statement"),
+        ).place(x=14, y=18)
 
+        ctk.CTkLabel(header, 
+                     text="Edit Expense", 
+                     font=("Arial", 42, "bold"), 
+                     text_color="black"
+                     ).pack(pady=(18, 10))
+        
         content = ctk.CTkFrame(self, fg_color="transparent")
         content.grid(row=1, column=0, sticky="nsew")
 

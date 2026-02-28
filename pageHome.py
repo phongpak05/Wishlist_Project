@@ -24,7 +24,7 @@ class pageHome(ctk.CTkFrame):
         ctk.CTkLabel(
             header,
             text="HOME",
-            font=("fc motorway", 58, "bold"),
+            font=("Arial", 42, "bold"),
             text_color="black"
         ).pack(pady=(16, 10))
 
@@ -100,4 +100,5 @@ class pageHome(ctk.CTkFrame):
             card.grid(row=i, column=0, sticky="ew", pady=8)
 
     def on_open_details(self, plan_id):
-        print("Open details for plan_id:", plan_id)
+        self.controller.current_plan_id = plan_id
+        self.showPage("detailhome")
