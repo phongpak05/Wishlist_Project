@@ -85,8 +85,27 @@ class pageAddsaving(ctk.CTkFrame):
         create_bottom_nav(footer, self.showPage)
 
     def save(self):
-        print("Saved:", self.income_entry.get())
 
+        amount = int(self.income_entry.get())
+        plan = self.controller.current_plan
+        plan["saved"] += amount
+
+        if plan["saved"] >= plan["target"]:
+            plan["saved"] = plan["target"]
+            plan["completed"] = True
+
+            self.controller.history.append(plan)
+            self.controller.plans.remove(plan)
+            self.controller.current_plan = None
+
+            self.showPage("home")
+            return
+
+        self.income_entry.delete(0, "end")
+        self.showPage("detailhome")
+
+    def refresh(self):
+        self.income_entry.delete(0, "end")
 
 if __name__ == "__main__":
     app = ctk.CTk()

@@ -19,10 +19,12 @@ class planCard(ctk.CTkFrame):
                      font=("Arial", 14, "bold")
                      ).grid(row=0, column=1, sticky="w")
 
-        ctk.CTkLabel(self, text=f"{percent}%", 
-                     text_color="black", 
-                     font=("Arial", 12)
-                     ).grid(row=0, column=2, padx=(0, 10), sticky="e")
+        ctk.CTkLabel(
+            self,
+            text=f"{percent*100:.0f}%",
+            text_color="black",
+            font=("Arial", 12)
+        ).grid(row=0, column=2, padx=(0, 10), sticky="e")
 
         ctk.CTkButton(
             self, text=">", 
@@ -37,4 +39,4 @@ class planCard(ctk.CTkFrame):
 
         prog = ctk.CTkProgressBar(self, height=10)
         prog.grid(row=1, column=0, columnspan=4, padx=12, pady=(0, 12), sticky="ew")
-        prog.set(max(0, min(percent, 100)) / 100)
+        prog.set(percent)

@@ -100,5 +100,10 @@ class pageHome(ctk.CTkFrame):
             card.grid(row=i, column=0, sticky="ew", pady=8)
 
     def on_open_details(self, plan_id):
-        self.controller.current_plan_id = plan_id
+
+        for p in self.controller.plans:
+            if p["id"] == plan_id:
+                self.controller.current_plan = p
+                break
+
         self.showPage("detailhome")

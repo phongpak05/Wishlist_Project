@@ -1,16 +1,15 @@
 import customtkinter as ctk
 from menu import create_bottom_nav
 from userBar import userBar
+from components import planCard
 
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 
 class pageHistory(ctk.CTkFrame):
-
     def __init__(self, parent, showPage, app):
         super().__init__(parent)
-
         self.showPage = showPage
         self.app = app
 
@@ -35,12 +34,8 @@ class pageHistory(ctk.CTkFrame):
         self.user_bar.pack(padx=20, pady=(0, 10), fill="x")
 
 
-        content = ctk.CTkFrame(self, fg_color="transparent")
-        content.grid(row=1, column=0, sticky="nsew")
-
-        self.create_history_card(content, "iphone", 100)
-        self.create_history_card(content, "ipad", 100)
-        self.create_history_card(content, "airpod", 100)
+        self.content = ctk.CTkFrame(self, fg_color="transparent")
+        self.content.grid(row=1, column=0, sticky="nsew")
 
         footer = ctk.CTkFrame(
             self,
@@ -53,72 +48,34 @@ class pageHistory(ctk.CTkFrame):
 
         create_bottom_nav(footer, self.showPage)
 
-    def create_history_card(self, parent, name, percent):
 
-        card = ctk.CTkFrame(
-            parent,
-            fg_color="#E6E6E6",
-            corner_radius=20,
-            height=90
-        )
-        card.pack(padx=30, pady=12, fill="x")
-        card.pack_propagate(False)
+    def refresh(self):
+        for widget in self.content.winfo_children():
+            widget.destroy()
 
-        icon_box = ctk.CTkFrame(
-            card,
-            width=45,
-            height=45,
-            fg_color="#1B7F2A",
-            corner_radius=10
-        )
-        icon_box.pack(side="left", padx=15)
-        icon_box.pack_propagate(False)
+        history = self.app.history
 
-        content = ctk.CTkFrame(card, fg_color="transparent")
-        content.pack(side="left", fill="both", expand=True, pady=15)
+        if not history:
+            ctk.CTkLabel(
+                self.content,
+                text="No completed plans",
+                font=("Arial", 16)
+            ).pack(pady=40)
+            return
 
-        top_row = ctk.CTkFrame(content, fg_color="transparent")
-        top_row.pack(fill="x")
+        for plan in history:
 
-        name_label = ctk.CTkLabel(
-            top_row,
-            text=name,
-            font=("Arial", 15, "bold"),
-            text_color="black"
-        )
-        name_label.pack(side="left")
+            card = planCard(
+                self.content,
+                name=plan["name"],
+                percent=1,
+                bar_color="#1B7F2A",
+                command=lambda p=plan: self.open_detail(p)
+            )
 
-        percent_label = ctk.CTkLabel(
-            top_row,
-            text=f"{percent}%",
-            font=("Arial", 13),
-            text_color="black"
-        )
-        percent_label.pack(side="right", padx=(0, 5))
-
-        arrow_label = ctk.CTkLabel(
-            top_row,
-            text=">",
-            font=("Arial", 14),
-            text_color="black"
-        )
-        arrow_label.pack(side="right")
-
-        progress = ctk.CTkProgressBar(
-            content,
-            height=10,
-            corner_radius=10,
-            progress_color="#1B7F2A"
-        )
-        progress.pack(fill="x", pady=(10, 0))
-        progress.set(percent / 100)
+            card.pack(padx=30, pady=12, fill="x")
 
 
-if __name__ == "__main__":
-    app = ctk.CTk()
-    app.geometry("390x740")
-
-    page = pageHistory(app, None, None)
-    page.pack(fill="both", expand=True)
-
-    app.mainloop()
+    def open_detail(self, plan):
+        self.app.current_plan = plan
+        self.showPage("detailhome")
