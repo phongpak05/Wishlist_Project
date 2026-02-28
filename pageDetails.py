@@ -4,7 +4,7 @@ ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 
-class DetailsPage(ctk.CTkFrame):
+class pageDetails(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master, fg_color="#F5F5F5")
         self.pack(fill="both", expand=True)
@@ -112,5 +112,5 @@ if __name__ == "__main__":
     app.geometry("390x740")
     app.resizable(False, False)
 
-    DetailsPage(app)
+    pageDetails(app)
     app.mainloop()
