@@ -1,80 +1,101 @@
-import tkinter as tk
+import customtkinter as ctk
+from menu import create_bottom_nav
 
-# ==============================
-# MAIN WINDOW
-# ==============================
-root = tk.Tk()
-root.geometry("390x740")
-root.configure(bg="#E9E9E9")
-root.title("Edit Income")
-root.resizable(False, False)
+ctk.set_appearance_mode("light")
+ctk.set_default_color_theme("blue")
 
-# ==============================
-# HEADER (Back + Title)
-# ==============================
-header = tk.Frame(root, bg="#E9E9E9")
-header.pack(fill="x", pady=(20, 0))
 
-back_btn = tk.Label(
-    header,
-    text="<",
-    font=("Arial", 18, "bold"),
-    bg="#E9E9E9",
-    fg="black",
-    cursor="hand2"
-)
-back_btn.pack(side="left", padx=20)
+class pageIncome(ctk.CTkFrame):
+    def __init__(self, master, showPage, controller):
+        super().__init__(master, fg_color="#F5F5F5")
+        self.showPage = showPage
+        self.controller = controller
 
-title = tk.Label(
-    root,
-    text="Edit Income",
-    font=("Arial Black", 18),
-    bg="#E9E9E9",
-    fg="black"
-)
-title.pack(pady=(10, 30))
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
 
-# ==============================
-# FORM SECTION
-# ==============================
-form_frame = tk.Frame(root, bg="#E9E9E9")
-form_frame.pack(pady=10)
+        header = ctk.CTkFrame(self, height=160, corner_radius=0, fg_color="#F5F5F5")
+        header.grid(row=0, column=0, sticky="ew")
+        header.grid_propagate(False)
 
-income_label = tk.Label(
-    form_frame,
-    text="Income",
-    font=("Arial", 10),
-    bg="#E9E9E9",
-    fg="#444"
-)
-income_label.pack(anchor="w", padx=0)
+        top_bar = ctk.CTkFrame(header, fg_color="transparent")
+        top_bar.pack(fill="x", padx=10, pady=(10, 0))
 
-income_entry = tk.Entry(
-    form_frame,
-    font=("Arial", 12),
-    bg="#DDDDDD",
-    relief="flat",
-    width=25
-)
-income_entry.pack(pady=5, ipady=6)
+        back_btn = ctk.CTkLabel(
+            top_bar,
+            text="<",
+            font=("Arial", 18, "bold"),
+            text_color="black",
+            cursor="hand2"
+        )
+        back_btn.pack(side="left", padx=10)
 
-# ==============================
-# SAVE BUTTON
-# ==============================
-def save():
-    print("Saved:", income_entry.get())
+        title = ctk.CTkLabel(
+            header,
+            text="Edit Income",
+            font=("fc motorway", 48, "bold"),
+            text_color="black"
+        )
+        title.pack(pady=(10, 10))
 
-save_btn = tk.Button(
-    root,
-    text="Save",
-    command=save,
-    font=("Arial", 12, "bold"),
-    bg="#1E7D22",
-    fg="white",
-    activebackground="#16651A",
-    relief="flat",
-    width=12
-)
-save_btn.pack(pady=20)
+        content = ctk.CTkFrame(self, fg_color="transparent")
+        content.grid(row=1, column=0, sticky="nsew")
 
-root.mainloop()
+        form_frame = ctk.CTkFrame(content, fg_color="transparent")
+        form_frame.pack(pady=20)
+
+        income_label = ctk.CTkLabel(
+            form_frame,
+            text="Income",
+            font=("Arial", 12),
+            text_color="#444"
+        )
+        income_label.pack(anchor="w", padx=5)
+
+        self.income_entry = ctk.CTkEntry(
+            form_frame,
+            font=("Arial", 12),
+            width=280,
+            fg_color="#DDDDDD",
+            border_width=0
+        )
+        self.income_entry.pack(pady=5, ipady=6)
+
+        save_btn = ctk.CTkButton(
+            content,
+            text="Save",
+            command=self.save,
+            font=("Arial", 12, "bold"),
+            fg_color="#1E7D22",
+            hover_color="#16651A",
+            text_color="white",
+            width=160,
+            height=40
+        )
+        save_btn.pack(pady=20)
+
+        footer = ctk.CTkFrame(
+                self,
+                height=80,
+                corner_radius=0,
+                fg_color="transparent"
+                )
+        footer.grid(row=2, column=0, sticky="ew")
+        footer.grid_propagate(False)
+
+        create_bottom_nav(footer, self.showPage)
+
+    def save(self):
+        print("Saved:", self.income_entry.get())
+
+
+if __name__ == "__main__":
+    app = ctk.CTk()
+    app.title("Saving App")
+    app.geometry("390x740")
+    app.resizable(False, False)
+
+    page = pageIncome(app, None, None)
+    page.pack(fill="both", expand=True)
+
+    app.mainloop()

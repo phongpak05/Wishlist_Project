@@ -5,7 +5,7 @@ ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 
-class pageEditexpense(ctk.CTkFrame):
+class pageAddsaving(ctk.CTkFrame):
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
         self.showPage = showPage
@@ -32,7 +32,7 @@ class pageEditexpense(ctk.CTkFrame):
 
         title = ctk.CTkLabel(
             header,
-            text="Edit Expense",
+            text="Add Saving",
             font=("fc motorway", 48, "bold"),
             text_color="black"
         )
@@ -46,7 +46,7 @@ class pageEditexpense(ctk.CTkFrame):
 
         income_label = ctk.CTkLabel(
             form_frame,
-            text="Income",
+            text="Amount Saved",
             font=("Arial", 12),
             text_color="#444"
         )
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     app.geometry("390x740")
     app.resizable(False, False)
 
-    page = pageEditexpense(app, None, None)
+    page = pageAddsaving(app, None, None)
     page.pack(fill="both", expand=True)
 
     app.mainloop()
