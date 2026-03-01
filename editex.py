@@ -32,7 +32,7 @@ class pageEditexpense(ctk.CTkFrame):
         ).place(x=14, y=18)
 
         ctk.CTkLabel(header, 
-                     text="Edit Expense", 
+                     text="Edit Expenses", 
                      font=("Arial", 42, "bold"), 
                      text_color="black"
                      ).pack(pady=(18, 10))
@@ -45,7 +45,7 @@ class pageEditexpense(ctk.CTkFrame):
 
         income_label = ctk.CTkLabel(
             form_frame,
-            text="Income",
+            text="Expenses",
             font=("Arial", 12),
             text_color="#444"
         )
