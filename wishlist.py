@@ -26,6 +26,8 @@ class app(ctk.CTk):
         self.plans = []
         self.history = []
         self.current_plan = None
+        self.income = None
+        self.expense = None
 
         self.pages = {}
         self.pages["welcome"] = pageWelcome(self, self.showPage)

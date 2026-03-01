@@ -48,11 +48,11 @@ class pageStatement(ctk.CTkFrame):
         income_frame.pack(side="left", padx=10)
         income_frame.pack_propagate(False)
 
-        income_amount = ctk.CTkLabel(income_frame, 
+        self.income_amount = ctk.CTkLabel(income_frame, 
                                      text="X,XXX",
                                      font=card_big_font, 
                                      text_color="white")
-        income_amount.pack(pady=(10, 0), anchor="w", padx=15)
+        self.income_amount.pack(pady=(10, 0), anchor="w", padx=15)
 
         income_label = ctk.CTkLabel(income_frame, 
                                     text="Total Income",
@@ -81,11 +81,11 @@ class pageStatement(ctk.CTkFrame):
         expense_frame.pack(side="left", padx=10)
         expense_frame.pack_propagate(False)
 
-        expense_amount = ctk.CTkLabel(expense_frame, 
+        self.expense_amount = ctk.CTkLabel(expense_frame, 
                                       text="X,XXX",
                                       font=card_big_font, 
                                       text_color="black")
-        expense_amount.pack(pady=(10, 0), anchor="w", padx=15)
+        self.expense_amount.pack(pady=(10, 0), anchor="w", padx=15)
 
         expense_label = ctk.CTkLabel(expense_frame, 
                                      text="Total Expense",
@@ -114,11 +114,11 @@ class pageStatement(ctk.CTkFrame):
         balance_frame.pack(pady=20)
         balance_frame.pack_propagate(False)
 
-        balance_amount = ctk.CTkLabel(balance_frame, 
+        self.balance_amount = ctk.CTkLabel(balance_frame, 
                                       text="X,XXX",
                                       font=card_big_font, 
                                       text_color="black")
-        balance_amount.pack(pady=(20, 0))
+        self.balance_amount.pack(pady=(20, 0))
 
         balance_label = ctk.CTkLabel(balance_frame, 
                                      text="Balance",
@@ -134,3 +134,16 @@ class pageStatement(ctk.CTkFrame):
         footer.grid_propagate(False)
 
         create_bottom_nav(footer, self.showPage)
+
+    def refresh(self):
+        income = self.controller.income
+        expense = self.controller.expense
+
+        if income is None or expense is None:
+            balance = 0
+        else:
+            balance = income - expense
+
+        self.income_amount.configure(text=f"{income:,}" if income else "0")
+        self.expense_amount.configure(text=f"{expense:,}" if expense else "0")
+        self.balance_amount.configure(text=f"{balance:,}")

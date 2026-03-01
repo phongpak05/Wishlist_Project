@@ -85,7 +85,9 @@ class pageEditexpense(ctk.CTkFrame):
         create_bottom_nav(footer, self.showPage)
 
     def save(self):
-        print("Saved:", self.income_entry.get())
+        amount = int(self.income_entry.get())
+        self.controller.expense = amount
+        self.showPage("statement")
 
 
 if __name__ == "__main__":

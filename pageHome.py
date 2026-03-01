@@ -6,6 +6,7 @@ from userBar import userBar
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
+
 class pageHome(ctk.CTkFrame):
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
@@ -47,9 +48,9 @@ class pageHome(ctk.CTkFrame):
             height=44,
             corner_radius=12,
             fg_color="#0A1E4A",
-            hover_color="#0A1E4A",
+            hover_color="#081633",
             text_color="white",
-            command=lambda: self.showPage("newplan")
+            command=self.go_add_plan
         )
         self.add_btn.grid(row=1, column=0, pady=20)
 
@@ -90,13 +91,19 @@ class pageHome(ctk.CTkFrame):
             return
 
         for i, p in enumerate(plans):
+
+            percent = 0
+            if p.get("target", 0) > 0:
+                percent = p.get("saved", 0) / p.get("target", 1)
+
             card = planCard(
                 self.list_frame,
                 name=p.get("name", f"plan {i+1}"),
-                percent=p.get("percent", 0),
+                percent=percent,
                 bar_color=p.get("color", "#2E7D32"),
                 command=lambda pid=p.get("id", i+1): self.on_open_details(pid)
             )
+
             card.grid(row=i, column=0, sticky="ew", pady=8)
 
     def on_open_details(self, plan_id):
@@ -107,3 +114,39 @@ class pageHome(ctk.CTkFrame):
                 break
 
         self.showPage("detailhome")
+
+    def go_add_plan(self):
+
+        if self.controller.income is None or self.controller.expense is None:
+            self.show_warning_popup()
+            return
+
+        self.showPage("newplan")
+
+    def show_warning_popup(self):
+
+        popup = ctk.CTkToplevel(self)
+        popup.geometry("320x170")
+        popup.title("Warning")
+
+        popup.transient(self.winfo_toplevel())
+        popup.grab_set()
+
+        x = self.winfo_rootx() + 40
+        y = self.winfo_rooty() + 200
+        popup.geometry(f"+{x}+{y}")
+
+        label = ctk.CTkLabel(
+            popup,
+            text="กรุณากรอก Income และ Expense ก่อนสร้าง Plan",
+            font=("Arial", 16),
+            wraplength=260
+        )
+        label.pack(pady=30)
+
+        btn = ctk.CTkButton(
+            popup,
+            text="OK",
+            command=popup.destroy
+        )
+        btn.pack(pady=10)

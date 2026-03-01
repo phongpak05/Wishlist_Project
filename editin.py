@@ -32,7 +32,7 @@ class pageEditincome(ctk.CTkFrame):
         ).place(x=14, y=18)
 
         ctk.CTkLabel(header, 
-                     text="Edit Expense", 
+                     text="Edit Income", 
                      font=("Arial", 42, "bold"), 
                      text_color="black"
                      ).pack(pady=(18, 10))
@@ -85,7 +85,9 @@ class pageEditincome(ctk.CTkFrame):
         create_bottom_nav(footer, self.showPage)
 
     def save(self):
-        print("Saved:", self.income_entry.get())
+        amount = int(self.income_entry.get())
+        self.controller.income = amount
+        self.showPage("statement")
 
 
 if __name__ == "__main__":
