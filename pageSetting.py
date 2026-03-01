@@ -42,7 +42,8 @@ class pageSetting(ctk.CTkFrame):
             corner_radius=12,
             fg_color="#6E0E0A",
             hover_color="#8B0000",
-            text_color="white"
+            text_color="white",
+            command=lambda : showPage("welcome")
         )
         logout_button.pack(pady=40)
 
