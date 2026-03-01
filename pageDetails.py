@@ -28,7 +28,7 @@ class pageDetails(ctk.CTkFrame):
             width=36,
             height=36,
             fg_color="transparent",
-            hover_color="#EEEEEE",
+            hover=False,
             text_color="black",
             font=("Arial", 28, "bold"),
             command=lambda: self.showPage("home"),
