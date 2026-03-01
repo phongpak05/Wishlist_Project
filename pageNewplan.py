@@ -126,30 +126,24 @@ class pageNewplan(ctk.CTkFrame):
         name = self.ent_name.get().strip()
         target = self.ent_target.get().strip()
 
-        duration_text = self.opt_duration.get()   
-        priority_text = self.opt_priority.get()  
+        duration_text = self.opt_duration.get()
+        priority_text = self.opt_priority.get()
 
         if not name:
             self.err.configure(text="กรุณากรอกชื่อแผน")
             return
 
         try:
-            target_val = float(target) if target else 0.0
+            target_val = float(target) if target else 0
         except ValueError:
-            self.err.configure(text="กรุณากรอก Price เป็นตัวเลข")
+            self.err.configure(text="Price ต้องเป็นตัวเลข")
             return
 
-        try:
-            duration_val = int(duration_text.split()[0])
-        except Exception:
-            duration_val = 0
+        duration_val = int(duration_text.split()[0])
+        priority_val = int(priority_text)
 
-        try:
-            priority_val = int(priority_text)
-        except Exception:
-            priority_val = 1
+        new_id = len(self.controller.plans)
 
-        new_id = len(getattr(self.controller, "plans", [])) + 1
         self.controller.plans.append({
             "id": new_id,
             "name": name,
@@ -157,7 +151,8 @@ class pageNewplan(ctk.CTkFrame):
             "color": "#2E7D32",
             "target": target_val,
             "duration": duration_val,
-            "priority": priority_val
+            "priority": priority_val,
+            "saved": 0
         })
 
         self.ent_name.delete(0, "end")

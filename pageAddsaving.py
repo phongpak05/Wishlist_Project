@@ -1,11 +1,12 @@
 import customtkinter as ctk
 from menu import create_bottom_nav
+from tkinter import messagebox
 
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 
-class pageEditincome(ctk.CTkFrame):
+class pageAddsaving(ctk.CTkFrame):
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
         self.showPage = showPage
@@ -28,11 +29,11 @@ class pageEditincome(ctk.CTkFrame):
             hover=False,
             text_color="black",
             font=("Arial", 28, "bold"),
-            command=lambda: self.showPage("statement"),
+            command=lambda: self.showPage("detailhome"),
         ).place(x=14, y=18)
 
         ctk.CTkLabel(header, 
-                     text="Edit Income", 
+                     text="Add Saving", 
                      font=("Arial", 42, "bold"), 
                      text_color="black"
                      ).pack(pady=(18, 10))
@@ -84,11 +85,83 @@ class pageEditincome(ctk.CTkFrame):
 
         create_bottom_nav(footer, self.showPage)
 
-    def save(self):
-        amount = int(self.income_entry.get())
-        self.controller.income = amount
-        self.showPage("statement")
+    def show_completed_popup(self):
+        popup = ctk.CTkToplevel(self)
+        popup.geometry("300x160")
+        popup.title("Completed")
 
+        popup.transient(self.winfo_toplevel())
+        popup.grab_set()
+
+        x = self.winfo_rootx() + 40
+        y = self.winfo_rooty() + 200
+        popup.geometry(f"+{x}+{y}")
+
+        label = ctk.CTkLabel(
+            popup,
+            text="คุณเก็บเงินครบตามเป้าหมายแล้ว!",
+            font=("Arial", 16)
+        )
+        label.pack(pady=30)
+
+        btn = ctk.CTkButton(
+            popup, 
+            text="OK",
+            hover=False, 
+            command=popup.destroy
+        )
+        btn.pack(pady=10)
+
+    def save(self):
+
+        try:
+            amount = int(self.income_entry.get())
+        except:
+            messagebox.showwarning("Error", "กรุณากรอกตัวเลข")
+            return
+
+        if self.controller.income is None or self.controller.expense is None:
+            messagebox.showwarning(
+                "Missing Data",
+                "กรุณากรอก Income และ Expense ก่อน"
+            )
+            self.showPage("statement")
+            return
+
+        income = self.controller.income
+        expense = self.controller.expense
+
+        balance = income - expense
+        limit = balance * 0.30
+
+        if amount > limit:
+            messagebox.showwarning(
+                "Saving Limit",
+                f"คุณออมได้ไม่เกิน {int(limit)} บาท"
+            )
+            return
+
+        plan = self.controller.current_plan
+        plan["saved"] += amount
+
+        if plan["saved"] >= plan["target"]:
+            plan["saved"] = plan["target"]
+            plan["completed"] = True
+
+            self.show_completed_popup()
+
+            self.controller.history.append(plan)
+            self.controller.plans.remove(plan)
+            self.controller.current_plan = None
+
+            self.showPage("home")
+            return
+
+        self.income_entry.delete(0, "end")
+        self.showPage("detailhome")
+
+    def refresh(self):
+        self.income_entry.delete(0, "end")
 
 if __name__ == "__main__":
     app = ctk.CTk()
@@ -96,7 +169,7 @@ if __name__ == "__main__":
     app.geometry("390x740")
     app.resizable(False, False)
 
-    page = pageEditincome(app, None, None)
+    page = pageAddsaving(app, None, None)
     page.pack(fill="both", expand=True)
 
     app.mainloop()

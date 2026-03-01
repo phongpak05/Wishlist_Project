@@ -5,7 +5,7 @@ ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 
-class pageEditincome(ctk.CTkFrame):
+class pageEditexpense(ctk.CTkFrame):
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
         self.showPage = showPage
@@ -32,7 +32,7 @@ class pageEditincome(ctk.CTkFrame):
         ).place(x=14, y=18)
 
         ctk.CTkLabel(header, 
-                     text="Edit Income", 
+                     text="Edit Expense", 
                      font=("Arial", 42, "bold"), 
                      text_color="black"
                      ).pack(pady=(18, 10))
@@ -86,7 +86,7 @@ class pageEditincome(ctk.CTkFrame):
 
     def save(self):
         amount = int(self.income_entry.get())
-        self.controller.income = amount
+        self.controller.expense = amount
         self.showPage("statement")
 
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     app.geometry("390x740")
     app.resizable(False, False)
 
-    page = pageEditincome(app, None, None)
+    page = pageEditexpense(app, None, None)
     page.pack(fill="both", expand=True)
 
     app.mainloop()
