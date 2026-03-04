@@ -65,15 +65,6 @@ class pageDetailsHome(ctk.CTkFrame):
             font=("Arial", 11)
         ).pack(anchor="e", pady=(0, 6))
 
-        self.bar2 = ctk.CTkProgressBar(
-            progress_section,
-            height=12,
-            progress_color="#2E7D32",
-            fg_color="#E0E0E0"
-        )
-        self.bar2.pack(fill="x")
-        self.bar2.set(0)
-
         self.add_btn = ctk.CTkButton(
             self,
             text="Add Saving",
