@@ -68,15 +68,6 @@ class pageDetails(ctk.CTkFrame):
             font=("Arial", 11)
         ).pack(anchor="e", pady=(0, 6))
 
-        bar2 = ctk.CTkProgressBar(
-            progress_section,
-            height=12,
-            progress_color="#2E7D32",
-            fg_color="#E0E0E0"
-        )
-        bar2.set(1)
-        bar2.pack(fill="x")
-
         ctk.CTkButton(
             self,
             text="Done",
