@@ -106,25 +106,48 @@ class pageStatement(ctk.CTkFrame):
         )
         edit_expense_btn.place(relx=1.0, rely=1.0, x=-8, y=-8, anchor="se")
 
-        balance_frame = ctk.CTkFrame(content, 
-                                     width=330, 
-                                     height=120,
-                                     fg_color="#cfcfcf", 
-                                     corner_radius=20)
-        balance_frame.pack(pady=20)
+        bottom_frame = ctk.CTkFrame(content, fg_color="transparent")
+        bottom_frame.pack(pady=10)
+
+        balance_frame = ctk.CTkFrame(bottom_frame,
+                                    width=160,
+                                    height=130,
+                                    fg_color="#cfcfcf",
+                                    corner_radius=20)
+        balance_frame.pack(side="left", padx=10)
         balance_frame.pack_propagate(False)
 
-        self.balance_amount = ctk.CTkLabel(balance_frame, 
-                                      text="X,XXX",
-                                      font=card_big_font, 
-                                      text_color="black")
-        self.balance_amount.pack(pady=(20, 0))
+        self.balance_amount = ctk.CTkLabel(balance_frame,
+                                        text="X,XXX",
+                                        font=card_big_font,
+                                        text_color="black")
+        self.balance_amount.pack(pady=(10, 0), anchor="w", padx=15)
 
-        balance_label = ctk.CTkLabel(balance_frame, 
-                                     text="Balance",
-                                     font=card_small_font, 
-                                     text_color="black")
-        balance_label.pack()
+        balance_label = ctk.CTkLabel(balance_frame,
+                                    text="Balance",
+                                    font=card_small_font,
+                                    text_color="black")
+        balance_label.pack(anchor="w", padx=15)
+
+        month_frame = ctk.CTkFrame(bottom_frame,
+                                width=160,
+                                height=130,
+                                fg_color="#cfcfcf",
+                                corner_radius=20)
+        month_frame.pack(side="left", padx=10)
+        month_frame.pack_propagate(False)
+
+        self.month_amount = ctk.CTkLabel(month_frame,
+                                        text="X,XXX",
+                                        font=card_big_font,
+                                        text_color="black")
+        self.month_amount.pack(pady=(10, 0), anchor="w", padx=15)
+
+        month_label = ctk.CTkLabel(month_frame,
+                                text="Per month",
+                                font=card_small_font,
+                                text_color="black")
+        month_label.pack(anchor="w", padx=15)
 
         footer = ctk.CTkFrame(self, 
                               height=80, 
