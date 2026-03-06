@@ -122,7 +122,43 @@ class pageNewplan(ctk.CTkFrame):
         footer.grid_propagate(False)
         create_bottom_nav(footer, self.showPage)
 
+    def show_popup(self, message, page):
+
+        popup = ctk.CTkToplevel(self)
+        popup.geometry("300x160")
+        popup.title("Warning")
+
+        popup.transient(self.winfo_toplevel())
+        popup.grab_set()
+
+        label = ctk.CTkLabel(
+            popup,
+            text=message,
+            font=("Arial", 16)
+        )
+        label.pack(pady=30)
+
+        btn = ctk.CTkButton(
+            popup,
+            text="OK",
+            command=lambda: [popup.destroy(), self.showPage(page)]
+        )
+        btn.pack(pady=10)
+
     def on_save(self):
+
+        if self.controller.income is None:
+            self.show_popup("กรุณากรอก Income ก่อน", "statement")
+            return
+
+        if self.controller.expense is None:
+            self.show_popup("กรุณากรอก Expense ก่อน", "statement")
+            return
+
+        if self.controller.permonth is None:
+            self.show_popup("กรุณาตั้งค่า Saving % ก่อน", "permonth")
+            return
+
         name = self.ent_name.get().strip()
         target = self.ent_target.get().strip()
 
@@ -160,7 +196,6 @@ class pageNewplan(ctk.CTkFrame):
         self.err.configure(text="")
 
         self.showPage("home")
-
 
 if __name__ == "__main__":
     root = ctk.CTk()

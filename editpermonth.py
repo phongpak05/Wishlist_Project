@@ -32,7 +32,7 @@ class pagePermonth(ctk.CTkFrame):
 
         ctk.CTkLabel(
             header,
-            text="Saving Percent",
+            text="Edit Percent",
             font=("Arial", 42, "bold"),
             text_color="black"
         ).pack(pady=(18, 10))
@@ -59,7 +59,11 @@ class pagePermonth(ctk.CTkFrame):
         self.percent_dropdown = ctk.CTkOptionMenu(
             form_frame,
             values=percent_options,
-            width=280
+            width=280,
+            text_color= "black",
+            fg_color= "white",
+            button_color= "#BDBDBD",
+            hover=False
         )
         self.percent_dropdown.pack(pady=5)
 
@@ -90,7 +94,6 @@ class pagePermonth(ctk.CTkFrame):
     def save(self):
 
         percent = int(self.percent_dropdown.get().replace("%", ""))
-
         income = self.controller.income
         expense = self.controller.expense
 
@@ -100,7 +103,5 @@ class pagePermonth(ctk.CTkFrame):
             balance = income - expense
 
         permonth = int(balance * (percent / 100))
-
         self.controller.permonth = permonth
-
         self.showPage("statement")

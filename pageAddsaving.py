@@ -120,19 +120,11 @@ class pageAddsaving(ctk.CTkFrame):
             messagebox.showwarning("Error", "กรุณากรอกตัวเลข")
             return
 
-        if self.controller.income is None or self.controller.expense is None:
-            messagebox.showwarning(
-                "Missing Data",
-                "กรุณากรอก Income และ Expense ก่อน"
-            )
-            self.showPage("statement")
-            return
-
         income = self.controller.income
         expense = self.controller.expense
 
         balance = income - expense
-        limit = balance * 0.30
+        limit = self.controller.permonth
 
         if amount > limit:
             messagebox.showwarning(

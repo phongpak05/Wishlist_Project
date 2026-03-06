@@ -27,10 +27,13 @@ class app(ctk.CTk):
         self.plans = []
         self.history = []
         self.current_plan = None
+
         self.income = None
         self.expense = None
+        self.permonth = None
 
         self.pages = {}
+
         self.pages["welcome"] = pageWelcome(self, self.showPage)
         self.pages["login"] = pageLogin(self, self.showPage)
         self.pages["register"] = pageRegister(self, self.showPage)
@@ -52,12 +55,14 @@ class app(ctk.CTk):
 
         self.showPage("welcome")
 
+
     def showPage(self, name):
         page = self.pages[name]
         page.tkraise()
 
         if hasattr(page, "refresh"):
             page.refresh()
+
 
 if __name__ == "__main__":
     app = app()
