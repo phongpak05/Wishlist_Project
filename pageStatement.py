@@ -149,6 +149,19 @@ class pageStatement(ctk.CTkFrame):
                                 text_color="black")
         month_label.pack(anchor="w", padx=15)
 
+        edit_month_amount_btn = ctk.CTkButton(
+            month_frame, 
+            text="📝", 
+            width=25, 
+            height=25,
+            fg_color="transparent", 
+            hover=False,
+            text_color="black", 
+            font=("Arial", 12),
+            command=lambda : showPage("editexpense")
+        )
+        edit_month_amount_btn.place(relx=1.0, rely=1.0, x=-8, y=-8, anchor="se")
+
         footer = ctk.CTkFrame(self, 
                               height=80, 
                               corner_radius=0, 

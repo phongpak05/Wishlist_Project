@@ -13,6 +13,7 @@ from editex import pageEditexpense
 from editin import pageEditincome
 from pageAddsaving import pageAddsaving
 from pageDetails_Home import pageDetailsHome
+from editpermonth import pagePermonth
 
 class app(ctk.CTk):
     def __init__(self):
@@ -43,6 +44,7 @@ class app(ctk.CTk):
         self.pages["detailhome"] = pageDetailsHome(self, self.showPage, self)
         self.pages["editexpense"] = pageEditexpense(self, self.showPage, self)
         self.pages["editincome"] = pageEditincome(self, self.showPage, self)
+        self.pages["editpermonth"] = pagePermonth(self, self.showPage, self)
         self.pages["addsaving"] = pageAddsaving(self, self.showPage, self)
 
         for page in self.pages.values():
