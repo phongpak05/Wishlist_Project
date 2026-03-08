@@ -1,6 +1,7 @@
 import customtkinter as ctk
 from menu import create_bottom_nav
 
+
 class pageNewplan(ctk.CTkFrame):
     def __init__(self, parent, showPage, controller):
         super().__init__(parent, fg_color="#EEEEEE")
@@ -10,16 +11,16 @@ class pageNewplan(ctk.CTkFrame):
         self.grid_rowconfigure(1, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        header = ctk.CTkFrame(self, height=160, 
-                              corner_radius=0, 
-                              fg_color="#EEEEEE")
+        header = ctk.CTkFrame(self, height=160, corner_radius=0, fg_color="#EEEEEE")
         header.grid(row=0, column=0, sticky="ew")
         header.grid_propagate(False)
 
-        ctk.CTkLabel(header, 
-                     text="New Plan", 
-                     font=("Arial", 42, "bold"), 
-                     text_color="black").pack(pady=(18, 10))
+        ctk.CTkLabel(
+            header,
+            text="New Plan",
+            font=("Arial", 42, "bold"),
+            text_color="black"
+        ).pack(pady=(18, 10))
 
         ctk.CTkButton(
             header,
@@ -44,27 +45,32 @@ class pageNewplan(ctk.CTkFrame):
 
         def label(text, r, top=10):
             ctk.CTkLabel(
-                form, text=text,
+                form,
+                text=text,
                 font=("Arial", 14, "bold"),
                 text_color="black"
-            ).grid(row=r, column=0, sticky="w", padx=0, pady=(top, 4))
+            ).grid(row=r, column=0, sticky="w", pady=(top, 4))
 
         def entry(widget, r):
             widget.configure(width=FORM_W, height=34, corner_radius=6)
             widget.grid(row=r, column=0, sticky="w")
 
         label("Goal", 0, top=6)
-        self.ent_name = ctk.CTkEntry(form, 
-                                     placeholder_text="name",
-                                     fg_color="white",
-                                     border_color="white")
+        self.ent_name = ctk.CTkEntry(
+            form,
+            placeholder_text="name",
+            fg_color="white",
+            border_color="white"
+        )
         entry(self.ent_name, 1)
 
         label("Price", 2, top=14)
-        self.ent_target = ctk.CTkEntry(form, 
-                                       placeholder_text="bath",
-                                       fg_color="white",
-                                       border_color="white")
+        self.ent_target = ctk.CTkEntry(
+            form,
+            placeholder_text="bath",
+            fg_color="white",
+            border_color="white"
+        )
         entry(self.ent_target, 3)
 
         label("Duration", 4, top=14)
@@ -114,15 +120,66 @@ class pageNewplan(ctk.CTkFrame):
         )
         self.btn_done.grid(row=1, column=0, pady=(26, 0))
 
-        footer = ctk.CTkFrame(self, 
-                              height=80, 
-                              corner_radius=0, 
-                              fg_color="#0A1E4A")
+        footer = ctk.CTkFrame(self, height=80, corner_radius=0, fg_color="#0A1E4A")
         footer.grid(row=2, column=0, sticky="ew")
         footer.grid_propagate(False)
         create_bottom_nav(footer, self.showPage)
 
+    def show_popup(self, message, page):
+
+        popup = ctk.CTkToplevel(self)
+        popup.geometry("300x160")
+        popup.title("Warning")
+
+        popup.transient(self.winfo_toplevel())
+        popup.grab_set()
+
+        label = ctk.CTkLabel(
+            popup,
+            text=message,
+            font=("Arial", 16)
+        )
+        label.pack(pady=30)
+
+        btn = ctk.CTkButton(
+            popup,
+            text="OK",
+            command=lambda: [popup.destroy(), self.showPage(page)]
+        )
+        btn.pack(pady=10)
+
+    # คำนวณเงินที่ต้องออมต่อเดือนของทุก plan
+    def calculate_required_per_month(self):
+
+        total = 0
+
+        for plan in self.controller.plans:
+
+            remaining = plan["target"] - plan["saved"]
+
+            if remaining <= 0:
+                continue
+
+            monthly = remaining / plan["duration"]
+
+            total += monthly
+
+        return total
+
     def on_save(self):
+
+        if self.controller.income is None:
+            self.show_popup("กรุณากรอก Income ก่อน", "statement")
+            return
+
+        if self.controller.expense is None:
+            self.show_popup("กรุณากรอก Expense ก่อน", "statement")
+            return
+
+        if self.controller.permonth is None:
+            self.show_popup("กรุณาตั้งค่า Saving % ก่อน", "editpermonth")
+            return
+
         name = self.ent_name.get().strip()
         target = self.ent_target.get().strip()
 
@@ -134,7 +191,7 @@ class pageNewplan(ctk.CTkFrame):
             return
 
         try:
-            target_val = float(target) if target else 0
+            target_val = float(target)
         except ValueError:
             self.err.configure(text="Price ต้องเป็นตัวเลข")
             return
@@ -142,9 +199,24 @@ class pageNewplan(ctk.CTkFrame):
         duration_val = int(duration_text.split()[0])
         priority_val = int(priority_text)
 
+        new_monthly = target_val / duration_val
+
+        current_required = self.calculate_required_per_month()
+
+        total_required = current_required + new_monthly
+
+        if total_required > self.controller.permonth:
+
+            left = self.controller.permonth - current_required
+
+            self.err.configure(
+                text=f"เงินออมต่อเดือนเหลือ {left:,.0f} บาท"
+            )
+            return
+
         new_id = len(self.controller.plans)
 
-        self.controller.plans.append({
+        new_plan = {
             "id": new_id,
             "name": name,
             "percent": 0,
@@ -153,7 +225,9 @@ class pageNewplan(ctk.CTkFrame):
             "duration": duration_val,
             "priority": priority_val,
             "saved": 0
-        })
+        }
+
+        self.controller.plans.append(new_plan)
 
         self.ent_name.delete(0, "end")
         self.ent_target.delete(0, "end")
@@ -163,6 +237,7 @@ class pageNewplan(ctk.CTkFrame):
 
 
 if __name__ == "__main__":
+
     root = ctk.CTk()
     root.title("Test New Plan")
     root.geometry("390x740")
@@ -171,6 +246,9 @@ if __name__ == "__main__":
     class DummyController:
         def __init__(self):
             self.plans = []
+            self.income = 20000
+            self.expense = 10000
+            self.permonth = 2000
 
     controller = DummyController()
 

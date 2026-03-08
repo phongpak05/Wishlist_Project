@@ -34,6 +34,9 @@ class pageSetting(ctk.CTkFrame):
         content = ctk.CTkFrame(self, fg_color="transparent")
         content.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
 
+        content.grid_rowconfigure(0, weight=1)
+        content.grid_columnconfigure(0, weight=1)
+
         logout_button = ctk.CTkButton(
             content,
             text="Log Out",
@@ -45,7 +48,7 @@ class pageSetting(ctk.CTkFrame):
             text_color="white",
             command=lambda : showPage("welcome")
         )
-        logout_button.pack(pady=40)
+        logout_button.grid(row=1, column=0, pady=(0,20))
 
         footer = ctk.CTkFrame(
             self,

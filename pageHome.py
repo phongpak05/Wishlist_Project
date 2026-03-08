@@ -6,7 +6,6 @@ from userBar import userBar
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
-
 class pageHome(ctk.CTkFrame):
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
@@ -117,7 +116,11 @@ class pageHome(ctk.CTkFrame):
 
     def go_add_plan(self):
 
-        if self.controller.income is None or self.controller.expense is None:
+        if (self.controller.income is None
+            or self.controller.expense is None
+            or self.controller.permonth is None
+            or self.controller.permonth <= 0):
+
             self.show_warning_popup()
             return
 
@@ -138,7 +141,7 @@ class pageHome(ctk.CTkFrame):
 
         label = ctk.CTkLabel(
             popup,
-            text="กรุณากรอก Income และ Expense ก่อนสร้าง Plan",
+            text="กรุณากรอก Statement ก่อน",
             font=("Arial", 16),
             wraplength=260
         )
@@ -147,6 +150,7 @@ class pageHome(ctk.CTkFrame):
         btn = ctk.CTkButton(
             popup,
             text="OK",
-            command=popup.destroy
+            hover=False,
+            command=lambda : [popup.destroy(), self.showPage("statement")]
         )
         btn.pack(pady=10)

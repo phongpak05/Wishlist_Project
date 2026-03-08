@@ -19,7 +19,6 @@ class pageAddsaving(ctk.CTkFrame):
         header.grid(row=0, column=0, sticky="ew")
         header.grid_propagate(False)
 
-
         ctk.CTkButton(
             header,
             text="‹",
@@ -32,25 +31,25 @@ class pageAddsaving(ctk.CTkFrame):
             command=lambda: self.showPage("detailhome"),
         ).place(x=14, y=18)
 
-        ctk.CTkLabel(header, 
-                     text="Add Saving", 
-                     font=("Arial", 42, "bold"), 
-                     text_color="black"
-                     ).pack(pady=(18, 10))
-        
+        ctk.CTkLabel(
+            header,
+            text="Add Saving",
+            font=("Arial", 42, "bold"),
+            text_color="black"
+        ).pack(pady=(18, 10))
+
         content = ctk.CTkFrame(self, fg_color="transparent")
         content.grid(row=1, column=0, sticky="nsew")
 
         form_frame = ctk.CTkFrame(content, fg_color="transparent")
         form_frame.pack(pady=20)
 
-        income_label = ctk.CTkLabel(
+        ctk.CTkLabel(
             form_frame,
             text="Income",
             font=("Arial", 12),
             text_color="#444"
-        )
-        income_label.pack(anchor="w", padx=5)
+        ).pack(anchor="w", padx=5)
 
         self.income_entry = ctk.CTkEntry(
             form_frame,
@@ -75,11 +74,11 @@ class pageAddsaving(ctk.CTkFrame):
         save_btn.pack(pady=20)
 
         footer = ctk.CTkFrame(
-                self,
-                height=80,
-                corner_radius=0,
-                fg_color="transparent"
-                )
+            self,
+            height=80,
+            corner_radius=0,
+            fg_color="transparent"
+        )
         footer.grid(row=2, column=0, sticky="ew")
         footer.grid_propagate(False)
 
@@ -93,10 +92,6 @@ class pageAddsaving(ctk.CTkFrame):
         popup.transient(self.winfo_toplevel())
         popup.grab_set()
 
-        x = self.winfo_rootx() + 40
-        y = self.winfo_rooty() + 200
-        popup.geometry(f"+{x}+{y}")
-
         label = ctk.CTkLabel(
             popup,
             text="คุณเก็บเงินครบตามเป้าหมายแล้ว!",
@@ -104,13 +99,12 @@ class pageAddsaving(ctk.CTkFrame):
         )
         label.pack(pady=30)
 
-        btn = ctk.CTkButton(
-            popup, 
+        ctk.CTkButton(
+            popup,
             text="OK",
-            hover=False, 
+            hover=False,
             command=popup.destroy
-        )
-        btn.pack(pady=10)
+        ).pack(pady=10)
 
     def save(self):
 
@@ -120,32 +114,50 @@ class pageAddsaving(ctk.CTkFrame):
             messagebox.showwarning("Error", "กรุณากรอกตัวเลข")
             return
 
-        if self.controller.income is None or self.controller.expense is None:
-            messagebox.showwarning(
-                "Missing Data",
-                "กรุณากรอก Income และ Expense ก่อน"
-            )
-            self.showPage("statement")
-            return
-
-        income = self.controller.income
-        expense = self.controller.expense
-
-        balance = income - expense
-        limit = balance * 0.30
-
-        if amount > limit:
-            messagebox.showwarning(
-                "Saving Limit",
-                f"คุณออมได้ไม่เกิน {int(limit)} บาท"
-            )
+        if amount <= 0:
+            messagebox.showwarning("Error", "จำนวนเงินต้องมากกว่า 0")
             return
 
         plan = self.controller.current_plan
+        if plan is None:
+            return
+
+        target = plan["target"]
+        saved = plan["saved"]
+
+        # เงินที่เหลือของ plan นี้
+        remaining = target - saved
+
+        if amount > remaining:
+            messagebox.showwarning(
+                "Saving Limit",
+                f"คุณออมได้ไม่เกิน {int(remaining)} บาท"
+            )
+            return
+
+        # ⭐ คำนวณเงินที่ใช้ไปจาก plan อื่น
+        used = 0
+        for p in self.controller.plans:
+            if p != plan:
+                used += p.get("saved", 0)
+
+        # เงินที่เหลือจาก permonth
+        monthly_left = self.controller.permonth - used
+
+        if amount > monthly_left:
+            messagebox.showwarning(
+                "Saving Limit",
+                f"คุณออมได้อีกไม่เกิน {int(monthly_left)} บาท"
+            )
+            return
+
+        # เพิ่มเงิน
         plan["saved"] += amount
 
-        if plan["saved"] >= plan["target"]:
-            plan["saved"] = plan["target"]
+        # ถ้าเก็บครบ
+        if plan["saved"] >= target:
+
+            plan["saved"] = target
             plan["completed"] = True
 
             self.show_completed_popup()
@@ -162,6 +174,7 @@ class pageAddsaving(ctk.CTkFrame):
 
     def refresh(self):
         self.income_entry.delete(0, "end")
+
 
 if __name__ == "__main__":
     app = ctk.CTk()

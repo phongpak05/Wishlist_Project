@@ -5,7 +5,7 @@ ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
 
-class pageEditincome(ctk.CTkFrame):
+class pagePermonth(ctk.CTkFrame):
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
         self.showPage = showPage
@@ -17,7 +17,6 @@ class pageEditincome(ctk.CTkFrame):
         header = ctk.CTkFrame(self, height=160, corner_radius=0, fg_color="#F5F5F5")
         header.grid(row=0, column=0, sticky="ew")
         header.grid_propagate(False)
-
 
         ctk.CTkButton(
             header,
@@ -31,34 +30,42 @@ class pageEditincome(ctk.CTkFrame):
             command=lambda: self.showPage("statement"),
         ).place(x=14, y=18)
 
-        ctk.CTkLabel(header, 
-                     text="Edit Income", 
-                     font=("Arial", 42, "bold"), 
-                     text_color="black"
-                     ).pack(pady=(18, 10))
-        
+        ctk.CTkLabel(
+            header,
+            text="Edit Percent",
+            font=("Arial", 42, "bold"),
+            text_color="black"
+        ).pack(pady=(18, 10))
+
         content = ctk.CTkFrame(self, fg_color="transparent")
         content.grid(row=1, column=0, sticky="nsew")
 
         form_frame = ctk.CTkFrame(content, fg_color="transparent")
         form_frame.pack(pady=20)
 
-        income_label = ctk.CTkLabel(
+        label = ctk.CTkLabel(
             form_frame,
-            text="Income",
+            text="Select Saving %",
             font=("Arial", 12),
             text_color="#444"
         )
-        income_label.pack(anchor="w", padx=5)
+        label.pack(anchor="w", padx=5)
 
-        self.income_entry = ctk.CTkEntry(
+        percent_options = [
+            "10%", "20%", "30%", "40%", "50%",
+            "60%", "70%", "80%", "90%", "100%"
+        ]
+
+        self.percent_dropdown = ctk.CTkOptionMenu(
             form_frame,
-            font=("Arial", 12),
+            values=percent_options,
             width=280,
-            fg_color="#DDDDDD",
-            border_width=0
+            text_color= "black",
+            fg_color= "white",
+            button_color= "#BDBDBD",
+            hover=False
         )
-        self.income_entry.pack(pady=5, ipady=6)
+        self.percent_dropdown.pack(pady=5)
 
         save_btn = ctk.CTkButton(
             content,
@@ -74,32 +81,27 @@ class pageEditincome(ctk.CTkFrame):
         save_btn.pack(pady=20)
 
         footer = ctk.CTkFrame(
-                self,
-                height=80,
-                corner_radius=0,
-                fg_color="transparent"
-                )
+            self,
+            height=80,
+            corner_radius=0,
+            fg_color="transparent"
+        )
         footer.grid(row=2, column=0, sticky="ew")
         footer.grid_propagate(False)
 
         create_bottom_nav(footer, self.showPage)
 
     def save(self):
-        amount = int(self.income_entry.get())
-        self.controller.income = amount
 
-        self.controller.pages["statement"].refresh()
+        percent = int(self.percent_dropdown.get().replace("%", ""))
+        income = self.controller.income
+        expense = self.controller.expense
 
+        if income is None or expense is None:
+            balance = 0
+        else:
+            balance = income - expense
+
+        permonth = int(balance * (percent / 100))
+        self.controller.permonth = permonth
         self.showPage("statement")
-
-
-if __name__ == "__main__":
-    app = ctk.CTk()
-    app.title("Saving App")
-    app.geometry("390x740")
-    app.resizable(False, False)
-
-    page = pageEditincome(app, None, None)
-    page.pack(fill="both", expand=True)
-
-    app.mainloop()

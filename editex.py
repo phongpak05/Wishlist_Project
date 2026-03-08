@@ -87,6 +87,9 @@ class pageEditexpense(ctk.CTkFrame):
     def save(self):
         amount = int(self.income_entry.get())
         self.controller.expense = amount
+
+        self.controller.pages["statement"].refresh()
+
         self.showPage("statement")
 
 

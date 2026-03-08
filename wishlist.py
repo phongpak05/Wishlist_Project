@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from pageWelcome import pageWelcome
 from pageLogin import pageLogin
-from pageRegister import pageRegister
 from pageHome import pageHome
 from pageNewplan import pageNewplan
 from components import planCard
@@ -13,8 +12,11 @@ from editex import pageEditexpense
 from editin import pageEditincome
 from pageAddsaving import pageAddsaving
 from pageDetails_Home import pageDetailsHome
+from editpermonth import pagePermonth
+
 
 class app(ctk.CTk):
+
     def __init__(self):
         super().__init__()
 
@@ -23,16 +25,19 @@ class app(ctk.CTk):
         self.title("WISHLIST")
 
         self.current_username = "Username"
+
         self.plans = []
         self.history = []
         self.current_plan = None
+
         self.income = None
         self.expense = None
+        self.permonth = None
 
         self.pages = {}
+
         self.pages["welcome"] = pageWelcome(self, self.showPage)
         self.pages["login"] = pageLogin(self, self.showPage)
-        self.pages["register"] = pageRegister(self, self.showPage)
 
         self.pages["home"] = pageHome(self, self.showPage, self)
         self.pages["newplan"] = pageNewplan(self, self.showPage, self)
@@ -43,6 +48,7 @@ class app(ctk.CTk):
         self.pages["detailhome"] = pageDetailsHome(self, self.showPage, self)
         self.pages["editexpense"] = pageEditexpense(self, self.showPage, self)
         self.pages["editincome"] = pageEditincome(self, self.showPage, self)
+        self.pages["editpermonth"] = pagePermonth(self, self.showPage, self)
         self.pages["addsaving"] = pageAddsaving(self, self.showPage, self)
 
         for page in self.pages.values():
@@ -50,13 +56,38 @@ class app(ctk.CTk):
 
         self.showPage("welcome")
 
+
     def showPage(self, name):
+
         page = self.pages[name]
         page.tkraise()
 
         if hasattr(page, "refresh"):
             page.refresh()
 
+
+    # NEW FUNCTIONS FOR SAVING LIMIT
+    def get_used_permonth(self):
+
+        total = 0
+
+        for p in self.plans:
+            total += p.get("monthly", 0)
+
+        return total
+
+
+    def get_left_permonth(self):
+
+        if self.permonth is None:
+            return 0
+
+        used = self.get_used_permonth()
+
+        return self.permonth - used
+
+
 if __name__ == "__main__":
+
     app = app()
     app.mainloop()
