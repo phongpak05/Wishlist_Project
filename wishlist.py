@@ -15,7 +15,9 @@ from pageAddsaving import pageAddsaving
 from pageDetails_Home import pageDetailsHome
 from editpermonth import pagePermonth
 
+
 class app(ctk.CTk):
+
     def __init__(self):
         super().__init__()
 
@@ -24,6 +26,7 @@ class app(ctk.CTk):
         self.title("WISHLIST")
 
         self.current_username = "Username"
+
         self.plans = []
         self.history = []
         self.current_plan = None
@@ -57,6 +60,7 @@ class app(ctk.CTk):
 
 
     def showPage(self, name):
+
         page = self.pages[name]
         page.tkraise()
 
@@ -64,6 +68,28 @@ class app(ctk.CTk):
             page.refresh()
 
 
+    # NEW FUNCTIONS FOR SAVING LIMIT
+    def get_used_permonth(self):
+
+        total = 0
+
+        for p in self.plans:
+            total += p.get("monthly", 0)
+
+        return total
+
+
+    def get_left_permonth(self):
+
+        if self.permonth is None:
+            return 0
+
+        used = self.get_used_permonth()
+
+        return self.permonth - used
+
+
 if __name__ == "__main__":
+
     app = app()
     app.mainloop()

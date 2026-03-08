@@ -6,7 +6,6 @@ from userBar import userBar
 ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")
 
-
 class pageHome(ctk.CTkFrame):
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
@@ -117,9 +116,11 @@ class pageHome(ctk.CTkFrame):
 
     def go_add_plan(self):
 
-        if (self.controller.income is None 
+        if (self.controller.income is None
             or self.controller.expense is None
-            or self.controller.permonth is None):
+            or self.controller.permonth is None
+            or self.controller.permonth <= 0):
+
             self.show_warning_popup()
             return
 

@@ -6,8 +6,10 @@ ctk.set_default_color_theme("blue")
 
 
 class pageDetailsHome(ctk.CTkFrame):
+
     def __init__(self, master, showPage, controller):
         super().__init__(master, fg_color="#F5F5F5")
+
         self.showPage = showPage
         self.controller = controller
 
@@ -88,6 +90,7 @@ class pageDetailsHome(ctk.CTkFrame):
 
         create_bottom_nav(footer, self.showPage)
 
+
     def card(self, parent, value, label, x, y, dark=False):
 
         bg = "#0A1E4A" if dark else "#E9E9E9"
@@ -119,26 +122,33 @@ class pageDetailsHome(ctk.CTkFrame):
 
         return value_label
 
+
     def refresh(self):
 
         plan = self.controller.current_plan
 
-        if not plan:
+        if plan is None:
             return
 
-        target = plan["target"]
-        saved = plan["saved"]
-        duration = plan["duration"]
-
-        percent = saved / target if target else 0
-        percent = min(percent, 1)
-
-        plan["percent"] = percent
+        target = plan.get("target", 0)
+        saved = plan.get("saved", 0)
+        duration = plan.get("duration", 1)
 
         remaining = max(target - saved, 0)
-        monthly = target / duration if duration else 0
 
-        self.bar1.set(percent)
+        # ⭐ คำนวณ monthly ใหม่
+        if duration > 0:
+            monthly = remaining / duration
+        else:
+            monthly = 0
+
+        # progress %
+        if target > 0:
+            percent = saved / target
+        else:
+            percent = 0
+
+        percent = min(percent, 1)
 
         self.target_label.configure(text=f"{target:,.0f}")
         self.saved_label.configure(text=f"{saved:,.0f}")
@@ -146,6 +156,9 @@ class pageDetailsHome(ctk.CTkFrame):
         self.remaining_label.configure(text=f"{remaining:,.0f}")
 
         self.bar1.set(percent)
+
+        if percent >= 1:
+            plan["completed"] = True
 
         if plan.get("completed"):
             self.add_btn.pack_forget()
