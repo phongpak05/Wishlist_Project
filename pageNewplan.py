@@ -88,20 +88,6 @@ class pageNewplan(ctk.CTkFrame):
         self.opt_duration.set("1 month")
         self.opt_duration.grid(row=5, column=0, sticky="w")
 
-        label("Priority", 6, top=14)
-        self.opt_priority = ctk.CTkOptionMenu(
-            form,
-            values=["1", "2", "3", "4", "5"],
-            width=FORM_W,
-            height=34,
-            corner_radius=6,
-            fg_color="#FFFFFF",
-            button_color="#FFFFFF",
-            button_hover_color="#FFFFFF",
-            text_color="black",
-        )
-        self.opt_priority.set("1")
-        self.opt_priority.grid(row=7, column=0, sticky="w")
 
         self.err = ctk.CTkLabel(form, text="", text_color="red", font=("Arial", 12))
         self.err.grid(row=8, column=0, sticky="w", pady=(10, 0))
