@@ -30,15 +30,6 @@ class pageWelcome(ctk.CTkFrame):
                       command=lambda:showPage("login"),
                       text_color="black").place(relx=0.5, rely=0.5, anchor="center")
 
-        ctk.CTkButton(self, 
-                      text="Register", 
-                      width=150,
-                      height=40, 
-                      font=buttonFont,
-                      fg_color="white",
-                      hover_color="white",
-                       command=lambda:showPage("register"),
-                      text_color="black").place(relx=0.5, rely=0.58, anchor="center")
 
 if __name__ == "__main__":
     root = ctk.CTk()
